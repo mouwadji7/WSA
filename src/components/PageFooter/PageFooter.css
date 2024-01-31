@@ -1,62 +1,18 @@
-/* Styles de base pour les grands écrans */
-footer {
-    background-color: black;
-    color: white;
-    padding: 20px;
-    text-align: center;
-    border-top: 2px solid #007bff;
-  }
-  
-  /* Media query pour les écrans plus petits */
-  @media screen and (max-width: 768px) {
-    footer {
-      padding: 10px; /* Ajustez selon vos besoins pour les écrans plus petits */
-    }
-  }
-  
-nav ul {
-    list-style: none;
-    display: flex;
-    flex-wrap: wrap; /* Permet aux éléments de faire un wrap si nécessaire */
+/* Style pour les liens dans la barre de navigation en bas */
+.navbar-brand.footer {
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: border-color 0.3s, color 0.3s;
+    margin: 5px;
+    padding: 8px 15px;
 }
 
-nav ul li {
-    max-width: auto; /* Ajoutez la largeur maximale souhaitée pour chaque élément li */
-    margin-right: 20px;
-    border: 2px solid white;
-    border-radius: 10px; /* Augmentez la valeur pour des coins plus arrondis */
-    padding: 5px;
-}
-
-nav ul li a {
-    text-decoration: none;
+.navbar-brand.footer:hover {
+    border-color: #fff;
     color: #fff;
-    padding: 10px;
-    display: block;
-    border-radius: 10px; /* Augmentez la valeur pour des coins plus arrondis */
-    transition: background-color 0.3s ease;
-    background-color: transparent;
 }
 
-nav ul li a:hover {
-    background-color: #fff;
-    color: #01060c;
-}
-
-nav ul li:last-child {
-    margin-right: 0;
-}
-
-nav ul li:last-child a {
-    background-color: #007bff;
-    border: 2px solid #007bff;
-    color: #fff;
-    padding: 10px 15px;
-    border-radius: 10px; /* Augmentez la valeur pour des coins plus arrondis */
-    transition: background-color 0.3s ease;
-}
-
-nav ul li:last-child a:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
+/* Réduction de la taille des lettres */
+.navbar-brand.footer {
+    font-size: 14px; /* Agrandit légèrement la taille du texte */
 }

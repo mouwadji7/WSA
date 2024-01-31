@@ -1,46 +1,28 @@
-.container {
-  margin: 0;
-  padding: 0;
+/* Style pour les liens dans la barre de navigation en haut */
+.navbar-brand {
+  border: 2px solid transparent; /* Augmente l'épaisseur de la bordure */
+  border-radius: 10px; /* Augmente le rayon de la bordure arrondie */
+  transition: border-color 0.3s, color 0.3s; /* Ajoute une transition de 0.3s pour le changement de couleur de la bordure et du texte au survol */
+  margin: 5px; /* Ajoute de la marge autour du lien */
+  padding: 8px 15px; /* Ajoute un peu de rembourrage à l'intérieur de la bordure */
 }
 
-#num {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
+.navbar-brand:hover {
+  border-color: #fff; /* Change la couleur de la bordure au survol */
+  color: #fff; /* Change la couleur du texte au survol */
 }
 
-#pow {
-  display: flex;
-  flex: 1;
-  overflow-y: auto; /* Permet un défilement vertical si le contenu est excessif uniquement pour #pow */
+/* Réduction de la taille des lettres */
+.navbar-brand {
+  font-size: 16px; /* Agrandit légèrement la taille du texte */
 }
 
-header,
-footer {
-  padding: 20px;
-  text-align: center;
-  background-color: #333;
-  color: #fff;
-  overflow-x: hidden;
-  overflow-y: hidden;
+main{
+  padding-bottom: 130px;
 }
 
-aside {
-  flex: 0 0 20%;
-}
-
-.left-aside {
-  order: -1; /* Déplace l'aside left vers la gauche */
-}
-
-.right-aside {
-  order: 1; /* Déplace l'aside right vers la droite */
-}
-
-.content {
-  flex: 1;
-  background-color: #f2f2f2;
-  padding: 20px;
-  text-align: center;
-  overflow-y: auto; /* Permet un défilement vertical si le contenu est excessif uniquement pour .content */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f9fa;
+  color: #343a40;
 }

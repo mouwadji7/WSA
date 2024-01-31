@@ -1,60 +1,7 @@
-/* Styles de base pour les grands écrans */
 header {
-  max-width: 100%;
-  display: flex;
-  align-items: center;
-  padding-left: 25%;
-  background-color: black;
-  border-bottom: 2px solid #007bff;
+  background-color: #212529;
 }
 
 header img {
-  width: 200px;
-  height: auto;
-  margin-right: 20px;
-}
-
-nav ul li {
-  margin-right: 20px;
-  border: 2px solid white;
-  border-radius: 5px;
-}
-
-nav ul li a {
-  padding: 10px;
-}
-
-nav ul li:last-child {
-  margin-right: 0;
-}
-
-nav ul li:last-child a {
-  padding: 10px 15px;
-}
-
-/* Media query pour les écrans plus petits */
-@media screen and (max-width: 768px) {
-  header {
-    padding-left: 10%;
-    height: 80px; /* Ajustez la hauteur du header pour les écrans plus petits */
-  }
-
-  nav ul {
-    flex-direction: column;
-  }
-
-  nav ul li {
-    margin-right: 0;
-    margin-bottom: 10px;
-  }
-
-  nav ul li a {
-    padding: 8px;
-  }
-
-  header img {
-    width: 150px;
-    height: auto; 
-    margin-right: 0;
-  }
+  max-height: 40px;
 }

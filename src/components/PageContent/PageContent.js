@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import PageForm from './PageForm';
+import PageFormV from './PageFormV';
 import PageDisplay from './PageDisplay';
 import SoumissionFaites from './SoumissionFaites';
+import Principale_Page from './Principale_Page';
 import './CSSPageContent.css';
 
 function PageContent() {
@@ -44,16 +46,19 @@ function PageContent() {
     return Math.random().toString(36).substr(2, 9);
   };
 
-  return (
+  /*
     <div>
       {!formSubmitted && !displayConfirmed && <PageForm onSubmit={handleFormSubmit} />}
       {formSubmitted && !displayConfirmed && (
         <PageDisplay formData={formData} onConfirm={handleConfirm} onCancel={handleCancel} onModify={handleModify} />
       )}
       {displayConfirmed && <SoumissionFaites submissionData={formData} />}
-      {/* Vous pouvez afficher ici la liste des soumissions, si nécessaire */}
+      {/* Vous pouvez afficher ici la liste des soumissions, si nécessaire }
       
-    </div>
+      </div>
+  */
+  return (
+    <PageFormV />
   );
 }
 

@@ -3,20 +3,18 @@ import './PageHeader.css';
 
 function PageHeader() {
   return (
-    <header id="headerid">
-      
-        <img src="/image/FotoJet.jpg" alt="LogoSite" />
-      
-      <nav>
-        <ul>
-          <li><a href='#'>Home</a></li>
-          <li><a href='#'>Qui sommes-nous</a></li>
-          <li><a href='#'>Contact</a></li>
-          <li><a href='#'>État de ma soumission</a></li>
-          <li><a href='#'>Login</a></li>
-        </ul>
-      </nav>
-    </header>
+    <header>
+            <nav class="navbar navbar-expand-sm bg-black navbar-dark fixed-top">
+                <div class="container">
+                    <img src="/image/logo.png" alt="notre_logo"/>
+                  <a class="navbar-brand" href="#">Home</a>
+                  <a class="navbar-brand" href="#">Faire une soumission</a>
+                  <a class="navbar-brand" href="#">État de ma soumission</a>
+                  <a class="navbar-brand" href="#">Payer soumission</a>
+                  <button type="button" class="btn btn-primary">Login</button>
+                </div>
+              </nav>
+        </header>
   );
 }
 
