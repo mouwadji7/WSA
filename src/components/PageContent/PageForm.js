@@ -2,23 +2,23 @@ import React, { useState } from 'react';
 import './CSSPageForm.css';
 
 function PageForm({ onSubmit }) {
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const formData = {
-      firstName: e.target.firstName.value,
-      lastName: e.target.lastName.value,
-      email: e.target.email.value,
-      phoneNumber: e.target.phoneNumber.value,
-      departureAddress: e.target.departureAddress.value,
-      destinationAddress: e.target.destinationAddress.value,
-      movingDate: e.target.movingDate.value,
-      movingTime: e.target.movingTime.value,
-    };
-    if (onSubmit) {
-      onSubmit(formData);
-    }
-  };
-
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const formData = {
+          firstName: e.target.firstName.value,
+          lastName: e.target.lastName.value,
+          email: e.target.email.value,
+          phoneNumber: e.target.phoneNumber.value,
+          departureAddress: e.target.departureAddress.value,
+          destinationAddress: e.target.destinationAddress.value,
+          movingDate: e.target.movingDate.value,
+          movingTime: e.target.movingTime.value,
+        };
+        if (onSubmit) {
+          onSubmit(formData);
+        }
+      };
+    
   return (
     <main class="container mt-5 pt-5">
     <h2>Formulaire de Demenagement n-1</h2>
@@ -119,5 +119,6 @@ function PageForm({ onSubmit }) {
 </main>
   );
 }
+
 
 export default PageForm;

@@ -1,7 +1,7 @@
 import React from 'react';
 import './CSSPrincipale_Page.css';
 
-function Principale_Page(){ 
+function Principale_Page({ onNavigateToForm }){ 
   return (
     <main class="container-fluid mt-5 pt-5">
             <div class="container">
@@ -53,7 +53,7 @@ function Principale_Page(){
                         profitez de nos services exceptionnels. Nous sommes là pour 
                         rendre votre déménagement aussi facile que possible!</p>
                         
-                    <button type="button" class="btn btn-dark">Faires une soumission</button>
+                    <button type="button" class="btn btn-dark" onClick={onNavigateToForm}>Faires une soumission</button>
 
                 </div>
 

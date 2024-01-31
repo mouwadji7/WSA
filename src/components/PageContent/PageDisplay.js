@@ -1,64 +1,41 @@
 import React from 'react';
 import './CSSPageDisplay.css';
 
-function PageDisplay({ formData, onConfirm, onCancel, onModify }) {
-  const {
-    firstName,
-    lastName,
-    email,
-    phoneNumber,
-    departureAddress,
-    destinationAddress,
-    movingDate,
-    movingTime,
-  } = formData;
-
+function PageDisplay({ formData, formDataV, onConfirm, onCancel, onModify }) {
   return (
-    <div className="display-container">
+    <main main class="container mt-5 pt-5">
+      <h2 className="mb-4">Révision des informations</h2>
 
-      <div className='aumilieu'>
-        <div></div>
-        <h2>Informations soumises :</h2>
-        <div></div>
+      <div className="border-bottom pb-3 mb-4">
+        <p className="mb-2">Client: {formData.firstName} {formData.lastName}</p>
+        <p className="mb-2">Identifiants : Email - {formData.email}, Téléphone - {formData.phoneNumber}</p>
       </div>
 
-
-      <div className="grid-container">
-        <p></p>
-        <div><strong>Votre Prenom :</strong></div>
-        <p className='double-width-item'>{firstName}</p>
-        
-        <p></p>
-        <div><strong>Votre nom :</strong></div>
-        <p className='double-width-item'>{lastName}</p>
-
-        <p></p>
-        <div><strong>Votre adresse email :</strong></div>
-        <p className='double-width-item'>{email}</p>
-
-        <p></p>
-        <div><strong>Votre numéro de téléphone :</strong></div>
-        <p className='double-width-item'>{phoneNumber}</p>
-
-        <p></p>
-        <div><strong>L'adresse de départ est :</strong></div>
-        <p className='double-width-item'>{departureAddress}</p>
-
-        <p></p>
-        <div><strong>L'adresse de destination est :</strong></div>
-        <p className='double-width-item'>{destinationAddress}</p>
-
-        <p></p>
-        <div><strong>Le déménagement sera le :</strong></div>
-        <p className='double-width-item'>{movingDate} à {movingTime}</p>
+      <div className="border-bottom pb-3 mb-4">
+        <p className="mb-2">Détails du trajet :</p>
+        <p className="mb-2">Adresse de départ : {formData.departureAddress}</p>
+        <p className="mb-2">Adresse de destination : {formData.movingDate} à {formData.movingTime}</p>
       </div>
-      
-      <div className="button-container">
-        <button className="confirm-button" onClick={onConfirm}>Je suis sûr de soumettre</button>
-        <button className="cancel-button" onClick={onCancel}>Annuler</button>
-        <button className="modify-button" onClick={onModify}>Modifier</button>
+
+      <div className="border-bottom pb-3 mb-4">
+        <p className="mb-2">Estimation des biens à transporter : {formDataV.sellist1}</p>
+        <p className="mb-2">Détails de l'habitation :</p>
+        <p className="mb-2">Type d'habitation : {formDataV.sellist2}</p>
+        <p className="mb-2">Emplacement dans l'habitation : {formDataV.AppartNumber}</p>
+        <p className="mb-2">Chambres à charger : {formDataV.sellist3}</p>
+        <p className="mb-2">Taille du camion suggérée : {formDataV.truckSize}</p>
       </div>
-    </div>
+
+      <div className="border-bottom pb-3 mb-4">
+        <p className="mb-2">Remarque : Plus le volume des biens à transporter est important, plus des frais supplémentaires peuvent s'appliquer. Les articles supplémentaires peuvent être soumis à des frais additionnels.</p>
+      </div>
+
+      <div className="mt-4">
+        <button className="btn btn-primary me-3" onClick={onConfirm}>Confirmer</button>
+        <button className="btn btn-primary me-3" onClick={onCancel}>Annuler</button>
+        <button className="btn btn-primary" onClick={onModify}>Modifier</button>
+      </div>
+    </main>
   );
 }
 

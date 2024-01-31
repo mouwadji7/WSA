@@ -6,59 +6,86 @@ import SoumissionFaites from './SoumissionFaites';
 import Principale_Page from './Principale_Page';
 import './CSSPageContent.css';
 
+const steps = {
+  PRINCIPALE: 'Principale',
+  PAGE_FORM: 'PageForm',
+  PAGE_FORM_V: 'PageFormV',
+  FORM_SUBMITTED: 'FormSubmitted',
+  DISPLAY_CONFIRMED: 'DisplayConfirmed',
+};
+
 function PageContent() {
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [currentPage, setCurrentPage] = useState(steps.PRINCIPALE);
   const [formData, setFormData] = useState(null);
-  const [displayConfirmed, setDisplayConfirmed] = useState(false);
-  const [soumissionsList, setSoumissionsList] = useState([]);
+  const [formDataV, setFormDataV] = useState(null);
 
   const handleFormSubmit = (formData) => {
-    // Générer un numéro de référence unique
-    const submissionReference = generateUniqueReference();
-    
-    // Sauvegarder les données de la soumission avec le numéro de référence
-    const submissionData = { ...formData, submissionReference };
-    
-    // Mettre à jour la liste des soumissions
-    setSoumissionsList([...soumissionsList, submissionData]);
-    
+    const newSubmissionReference = generateUniqueReference();
+    const submissionData = { ...formData, submissionReference: newSubmissionReference };
+
     setFormData(submissionData);
-    setFormSubmitted(true);
+    setCurrentPage(steps.PAGE_FORM_V);
+  };
+
+  const handleNavigateToForm = () => {
+    setCurrentPage(steps.PAGE_FORM);
+  };
+
+  const handleFormSubmitV = (formDataV) => {
+    const submissionDataV = { ...formDataV, submissionReference: formData.submissionReference };
+
+    setFormDataV(submissionDataV);
+    setCurrentPage(steps.FORM_SUBMITTED);
   };
 
   const handleConfirm = () => {
-    setDisplayConfirmed(true);
+    setCurrentPage(steps.DISPLAY_CONFIRMED);
   };
 
   const handleCancel = () => {
-    setFormSubmitted(false);
+    setCurrentPage(steps.PRINCIPALE);
     setFormData(null);
-    setDisplayConfirmed(false);
+    setFormDataV(null);
   };
 
   const handleModify = () => {
-    setFormSubmitted(false);
-    setDisplayConfirmed(false);
+    setCurrentPage(currentPage === steps.PAGE_FORM ? steps.PAGE_FORM_V : steps.PAGE_FORM);
   };
 
   const generateUniqueReference = () => {
-    // Générer un numéro de référence unique (peut-être utiliser une logique personnalisée)
     return Math.random().toString(36).substr(2, 9);
   };
 
-  /*
-    <div>
-      {!formSubmitted && !displayConfirmed && <PageForm onSubmit={handleFormSubmit} />}
-      {formSubmitted && !displayConfirmed && (
-        <PageDisplay formData={formData} onConfirm={handleConfirm} onCancel={handleCancel} onModify={handleModify} />
-      )}
-      {displayConfirmed && <SoumissionFaites submissionData={formData} />}
-      {/* Vous pouvez afficher ici la liste des soumissions, si nécessaire }
-      
-      </div>
-  */
+  const handleReturnToHome = () => {
+    setCurrentPage(steps.PRINCIPALE);
+    setFormData(null);
+    setFormDataV(null);
+  };
+  
+
   return (
-    <PageFormV />
+    <div>
+      {currentPage === steps.PRINCIPALE && <Principale_Page onNavigateToForm={handleNavigateToForm} />}
+      {currentPage === steps.PAGE_FORM && <PageForm onSubmit={handleFormSubmit} />}
+      {currentPage === steps.PAGE_FORM_V && <PageFormV onSubmit={handleFormSubmitV} />}
+      {currentPage === steps.FORM_SUBMITTED && formDataV && (
+        <PageDisplay
+          formData={formData}
+          formDataV={formDataV}
+          onConfirm={handleConfirm}
+          onCancel={handleCancel}
+          onModify={handleModify}
+        />
+      )}
+      {currentPage === steps.DISPLAY_CONFIRMED && formDataV && (
+        <SoumissionFaites
+          formData={formData}
+          formDataV={formDataV}
+          submissionReference={formData.submissionReference}
+          onReturnToHome={handleReturnToHome}
+        />
+      )}
+    </div>
   );
 }
 
