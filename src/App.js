@@ -1,4 +1,5 @@
-import React from 'react';
+// App.js
+import React, { useState } from 'react';
 import './App.css';
 import PageHeader from './components/PageHeader/PageHeader';
 import PageContent from './components/PageContent/PageContent';
@@ -8,7 +9,11 @@ import PageContentAM from './admincomponents/PageContentAM/PageContentAM';
 import PageFooterAM from './admincomponents/PageFooterAM/PageFooterAM';
 
 function App() {
-  const login = true; 
+  const [login, setLogin] = useState(false); // Initialiser l'état de connexion à false
+
+  const handleLogin = () => {
+    setLogin(true); // Modifier l'état de connexion lors du clic sur le bouton Login
+  };
 
   if (login) {
     return (
@@ -21,7 +26,7 @@ function App() {
   } else {
     return (
       <div>
-        <PageHeader />
+        <PageHeader onLogin={handleLogin} /> 
         <PageContent />
         <PageFooter />
       </div>
