@@ -12,13 +12,13 @@ function App() {
   const [login, setLogin] = useState(false); // Initialiser l'état de connexion à false
 
   const handleLogin = () => {
-    setLogin(true); // Modifier l'état de connexion lors du clic sur le bouton Login
+    setLogin(!login); // Modifier l'état de connexion lors du clic sur le bouton Login
   };
 
   if (login) {
     return (
       <div>
-        <PageHeaderAM />
+        <PageHeaderAM onLogin={handleLogin}/>
         <PageContentAM />
         <PageFooterAM />
       </div>
