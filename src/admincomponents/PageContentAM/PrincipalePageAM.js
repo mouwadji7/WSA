@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function PrincipalePageAM() {
     return (
-        <main className="container mt-5 pt-5">
+        <main className="container-fluid mt-5 pt-5">
             <h1> Page Principales Pour les Admins </h1>
 
             <div class="mt-4 p-5 bg-primary text-white rounded">

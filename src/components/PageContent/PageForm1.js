@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './CSSPageForm.css';
 
 function PageForm({ onSubmit }) {
@@ -21,7 +21,7 @@ function PageForm({ onSubmit }) {
     
   return (
     <main class="container mt-5 pt-5">
-    <h2>Formulaire de Demenagement n-1</h2>
+    <h2>Formulaire de Demenagement nº1</h2>
     <p>Remplissez le formulaire numero 1 ci-dessous pour obtenir un devis personnalisé et commencer votre expérience de déménagement en toute simplicité.</p>
 
     <form onSubmit={handleSubmit}>
@@ -75,7 +75,7 @@ function PageForm({ onSubmit }) {
             
             <div class="row mt-3">
                 <div class="col">
-                    <button type="submit" class="btn btn-primary">Soumettre Formulaire numeros 1</button>
+                    <button type="submit" class="btn btn-primary">Suivant Formulaire</button>
                 </div>
                 <div class="col">
                     <button type="reset" class="btn btn-primary">Effacer le formulaire</button>

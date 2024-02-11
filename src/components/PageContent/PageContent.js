@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import PageForm from './PageForm';
-import PageFormV from './PageFormV';
+import PageForm from './PageForm1';
+import PageFormV from './PageForm2';
 import PageDisplay from './PageDisplay';
 import SoumissionFaites from './SoumissionFaites';
 import Principale_Page from './Principale_Page';
