@@ -33,7 +33,7 @@ function PageFormV({ onSubmit }) {
 
   return (
     <main className="container mt-5 pt-5">
-      <h2>Formulaire de Déménagement Choix de voitures n-2</h2>
+      <h2>Formulaire de Déménagement Choix de voitures nº2</h2>
       <p>Remplissez le formulaire numéro 2 ci-dessous pour obtenir un devis personnalisé et commencer votre expérience de déménagement en toute simplicité.</p>
 
       <form onSubmit={handleSubmitV}>

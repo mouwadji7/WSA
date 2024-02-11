@@ -11,11 +11,12 @@ function PageVehiculesAM() {
     };
 
     return (
-        <main className="container mt-5 pt-5">
+        <main className="container-fluid mt-5 pt-5">
+
             <h1> Page Gestion Véhicules </h1>
 
             <div className="row">
-                <div className="col-sm-6 bg-primary text-white">
+                <div className="col-sm-6 bg-primary text-white ">
                     <div className="container pt-5">
                         <h1 className="text-dark">Cote Management </h1>
 

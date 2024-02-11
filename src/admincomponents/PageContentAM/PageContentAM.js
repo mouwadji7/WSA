@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PageEmployeAM from './PageEmployeAM/PageEmployeAM';
 import PageVehiculesAM from './PageVehiculesAM/PageVehiculesAM';
 import PrincipalePageAM from './PrincipalePageAM'
@@ -8,7 +8,7 @@ function PageContentAM({ selectedPage }) {
 
 
   return (
-    <div>
+    <div className='.Left_Right_padding'>
     {selectedPage === 'AdminHome' && <PrincipalePageAM/>}
     {selectedPage === 'GestionEmployes' && <PageEmployeAM />}
     {selectedPage === 'GestionVehicules' && <PageVehiculesAM />}
