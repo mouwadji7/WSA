@@ -1,7 +1,38 @@
 import React from 'react';
 import './CSSPageDisplay.css';
+import axios from "../../api/axiosConfig"; // Adjust the import path
 
 function PageDisplay({ formData, formDataV, onConfirm, onCancel, onModify }) {
+
+  // Fonction pour envoyer les données à Spring Boot
+  const sendDataToSpringBoot = () => {
+    const submissionData = {
+      referenceNumber: formData.submissionReference, // Utilisation de la référence générée précédemment
+      nom: formData.firstName,
+      prenom: formData.lastName,
+      email: formData.email,
+      telephone: formData.phoneNumber,
+      adresseDepart: formData.departureAddress,
+      adresseDestination: formData.destinationAddress,
+      dateDemenagement: formData.movingDate,
+      heureDemenagement: formData.movingTime,
+      typeHabitation: formDataV.sellist2,
+      emplacementHabitation: formDataV.AppartNumber,
+      chambresACharger: formDataV.sellist3
+    };
+
+    axios.post('/soumission', submissionData) // Utiliser axiosInstance avec l'endpoint correct
+      .then(response => {
+        // Gérer la réponse si nécessaire
+        console.log(response.data);
+      })
+      .catch(error => {
+        // Gérer les erreurs si nécessaire
+        console.error('Erreur lors de l\'envoi des données:', error);
+      });
+  };
+
+
   return (
     <main main class="container mt-5 pt-5">
       <h2 className="mb-4">Révision des informations</h2>
@@ -31,7 +62,7 @@ function PageDisplay({ formData, formDataV, onConfirm, onCancel, onModify }) {
       </div>
 
       <div className="mt-4">
-        <button className="btn btn-primary me-3" onClick={onConfirm}>Confirmer</button>
+        <button className="btn btn-primary me-3" onClick={() => { onConfirm(); sendDataToSpringBoot(); }}>Confirmer</button>
         <button className="btn btn-primary me-3" onClick={onCancel}>Annuler</button>
         <button className="btn btn-primary" onClick={onModify}>Modifier</button>
       </div>
