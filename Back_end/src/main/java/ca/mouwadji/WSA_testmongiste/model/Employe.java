@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,7 +24,6 @@ public class Employe {
     private String prenom;
     private String email;
     private String telephone;
-
-    @OneToMany(mappedBy = "employe")
+    
     private List<Tache> taches;
 }

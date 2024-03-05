@@ -5,9 +5,6 @@ import java.sql.Date;
 import org.springframework.data.annotation.Id;
 import java.util.List;
 
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,10 +19,8 @@ public class Tache {
     @Id
     private Long id;
 
-    @ManyToMany(mappedBy = "taches")
     private List<Employe> employes;
 
-    @ManyToMany(mappedBy = "taches")
     private List<Vehicule> vehicules;
 
     private Date heureDebut;

@@ -4,8 +4,8 @@ import axios from "../../api/axiosConfig"; // Adjust the import path
 
 function PageDisplay({ formData, formDataV, onConfirm, onCancel, onModify }) {
 
-  // Fonction pour envoyer les données à Spring Boot
-  const sendDataToSpringBoot = () => {
+  // Fonction pour sauvegarder la soumission
+  saveSubmission = () => {
     const submissionData = {
       referenceNumber: formData.submissionReference, // Utilisation de la référence générée précédemment
       nom: formData.firstName,
@@ -21,10 +21,10 @@ function PageDisplay({ formData, formDataV, onConfirm, onCancel, onModify }) {
       chambresACharger: formDataV.sellist3
     };
 
-    axios.post('/soumission', submissionData) // Utiliser axiosInstance avec l'endpoint correct
+    axios.post('/api/soumissions', submissionData) // Envoi des données à Spring Boot
       .then(response => {
-        // Gérer la réponse si nécessaire
-        console.log(response.data);
+        // Confirmer la soumission après l'envoi des données
+        onConfirm();
       })
       .catch(error => {
         // Gérer les erreurs si nécessaire
@@ -32,6 +32,26 @@ function PageDisplay({ formData, formDataV, onConfirm, onCancel, onModify }) {
       });
   };
 
+  // Fonction pour sauvegarder la soumission
+  const saveSubmission = () => {
+    const submissionData = {
+      referenceNumber: formData.submissionReference, // Utilisation de la référence générée précédemment
+      nom: formData.firstName,
+      prenom: formData.lastName,
+      email: formData.email,
+      telephone: formData.phoneNumber,
+      adresseDepart: formData.departureAddress,
+      adresseDestination: formData.destinationAddress,
+      dateDemenagement: formData.movingDate,
+      heureDemenagement: formData.movingTime,
+      typeHabitation: formDataV.sellist2,
+      emplacementHabitation: formDataV.AppartNumber,
+      chambresACharger: formDataV.sellist3
+    };
+
+    saveSubmission(submissionData); // Envoi des données à Spring Boot
+    onConfirm(); // Confirmer la soumission après l'envoi des données
+  };
 
   return (
     <main main class="container mt-5 pt-5">
@@ -62,7 +82,7 @@ function PageDisplay({ formData, formDataV, onConfirm, onCancel, onModify }) {
       </div>
 
       <div className="mt-4">
-        <button className="btn btn-primary me-3" onClick={() => { onConfirm(); sendDataToSpringBoot(); }}>Confirmer</button>
+        <button className="btn btn-primary me-3" onClick={saveSubmission}>Confirmer</button>
         <button className="btn btn-primary me-3" onClick={onCancel}>Annuler</button>
         <button className="btn btn-primary" onClick={onModify}>Modifier</button>
       </div>
