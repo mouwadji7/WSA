@@ -23,6 +23,6 @@ public class Vehicule {
 
     private String type;
 
-    @ManyToMany(mappedBy = "vehicules")
+    @OneToMany(mappedBy = "vehicule")
     private List<Tache> taches;
 }
