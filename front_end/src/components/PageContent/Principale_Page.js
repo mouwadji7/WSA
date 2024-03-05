@@ -1,7 +1,15 @@
 import React from 'react';
 import './CSSPrincipale_Page.css';
 
-function Principale_Page({ onNavigateToForm }){ 
+function Principale_Page({ onSubmit }){ 
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        // Faites toutes les validations nécessaires ici
+        // Si tout est valide, déclenchez l'événement onSubmit
+        onSubmit();
+      };
+
   return (
     <main class="container-fluid mt-5 pt-5">
             <div class="container">
@@ -53,7 +61,7 @@ function Principale_Page({ onNavigateToForm }){
                         profitez de nos services exceptionnels. Nous sommes là pour 
                         rendre votre déménagement aussi facile que possible!</p>
                         
-                    <button type="button" class="btn btn-dark" onClick={onNavigateToForm}>Faires une soumission</button>
+                    <button type="button" class="btn btn-dark" onClick={handleSubmit}>Faires une soumission</button>
 
                 </div>
 

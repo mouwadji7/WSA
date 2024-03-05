@@ -26,6 +26,6 @@ public class Employe {
     private String email;
     private String telephone;
 
-    @OneToMany(mappedBy = "employes")
-    private List<Tache>taches;
+    @OneToMany(mappedBy = "employe")
+    private List<Tache> taches;
 }

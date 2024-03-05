@@ -22,14 +22,10 @@ public class Tache {
     @Id
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "soumission_id")
-    private Soumission soumission;
-
-    @ManyToMany
+    @ManyToMany(mappedBy = "taches")
     private List<Employe> employes;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "taches")
     private List<Vehicule> vehicules;
 
     private Date heureDebut;

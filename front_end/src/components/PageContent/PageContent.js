@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import PageForm from './PageForm1';
 import PageFormV from './PageForm2';
 import PageDisplay from './PageDisplay';
@@ -7,49 +8,45 @@ import Principale_Page from './Principale_Page';
 import './CSSPageContent.css';
 
 const steps = {
-  PRINCIPALE: 'Principale',
-  PAGE_FORM: 'PageForm',
-  PAGE_FORM_V: 'PageFormV',
-  FORM_SUBMITTED: 'FormSubmitted',
-  DISPLAY_CONFIRMED: 'DisplayConfirmed',
+  PRINCIPALE: '/',
+  PAGE_FORM: '/pageform',
+  PAGE_FORM_V: '/pageformv',
+  FORM_SUBMITTED: '/formsubmitted',
+  DISPLAY_CONFIRMED: '/displayconfirmed',
 };
 
 function PageContent() {
-  const [currentPage, setCurrentPage] = useState(steps.PRINCIPALE);
   const [formData, setFormData] = useState(null);
   const [formDataV, setFormDataV] = useState(null);
+  const navigate = useNavigate();
 
   const handleFormSubmit = (formData) => {
     const newSubmissionReference = generateUniqueReference();
     const submissionData = { ...formData, submissionReference: newSubmissionReference };
 
     setFormData(submissionData);
-    setCurrentPage(steps.PAGE_FORM_V);
+    navigate(steps.PAGE_FORM_V);
   };
 
   const handleNavigateToForm = () => {
-    setCurrentPage(steps.PAGE_FORM);
+    navigate(steps.PAGE_FORM);
   };
 
   const handleFormSubmitV = (formDataV) => {
     const submissionDataV = { ...formDataV, submissionReference: formData.submissionReference };
 
     setFormDataV(submissionDataV);
-    setCurrentPage(steps.FORM_SUBMITTED);
+    navigate(steps.FORM_SUBMITTED);
   };
 
   const handleConfirm = () => {
-    setCurrentPage(steps.DISPLAY_CONFIRMED);
+    navigate(steps.DISPLAY_CONFIRMED);
   };
 
   const handleCancel = () => {
-    setCurrentPage(steps.PRINCIPALE);
+    navigate(steps.PRINCIPALE);
     setFormData(null);
     setFormDataV(null);
-  };
-
-  const handleModify = () => {
-    setCurrentPage(currentPage === steps.PAGE_FORM ? steps.PAGE_FORM_V : steps.PAGE_FORM);
   };
 
   const generateUniqueReference = () => {
@@ -57,35 +54,42 @@ function PageContent() {
   };
 
   const handleReturnToHome = () => {
-    setCurrentPage(steps.PRINCIPALE);
+    navigate(steps.PRINCIPALE);
     setFormData(null);
     setFormDataV(null);
   };
-  
 
   return (
-    <div>
-      {currentPage === steps.PRINCIPALE && <Principale_Page onNavigateToForm={handleNavigateToForm} />}
-      {currentPage === steps.PAGE_FORM && <PageForm onSubmit={handleFormSubmit} />}
-      {currentPage === steps.PAGE_FORM_V && <PageFormV onSubmit={handleFormSubmitV} />}
-      {currentPage === steps.FORM_SUBMITTED && formDataV && (
-        <PageDisplay
-          formData={formData}
-          formDataV={formDataV}
-          onConfirm={handleConfirm}
-          onCancel={handleCancel}
-          onModify={handleModify}
-        />
-      )}
-      {currentPage === steps.DISPLAY_CONFIRMED && formDataV && (
-        <SoumissionFaites
-          formData={formData}
-          formDataV={formDataV}
-          submissionReference={formData.submissionReference}
-          onReturnToHome={handleReturnToHome}
-        />
-      )}
-    </div>
+    <Router>
+      <div>
+        <Routes>
+          <Route path={steps.PRINCIPALE} element={<Principale_Page onSubmit={handleNavigateToForm} />} />
+          <Route path={steps.PAGE_FORM} element={<PageForm onSubmit={handleFormSubmit} />} />
+          <Route path={steps.PAGE_FORM_V} element={<PageFormV onSubmit={handleFormSubmitV} />} />
+          <Route
+            path={steps.FORM_SUBMITTED}
+            element={
+              <PageDisplay
+                formData={formData}
+                formDataV={formDataV}
+                onConfirm={handleConfirm}
+                onCancel={handleCancel}
+              />
+            }
+          />
+          <Route
+            path={steps.DISPLAY_CONFIRMED}
+            element={
+              <SoumissionFaites
+                formData={formData}
+                formDataV={formDataV}
+                submissionReference={formData && formData.submissionReference}
+              />
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
