@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("/api/soumissions")
+@RequestMapping("/api")
 public class SoumissionController {
 
     private final IASoumissionService soumissionService;
@@ -25,32 +25,32 @@ public class SoumissionController {
         this.soumissionService = soumissionService;
     }
 
-    @PostMapping("/Create")
+    @PostMapping("/soumissions/Create")
     public Soumission saveSoumission(@RequestBody Soumission soumission) {
         return soumissionService.saveSoumission(soumission);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/soumissions/{id}")
     public Soumission getSoumissionById(@PathVariable Long id) {
         return soumissionService.getSoumissionById(id);
     }
 
-    @GetMapping("/reference/{referenceNumber}")
+    @GetMapping("/soumissions/reference/{referenceNumber}")
     public Soumission getSoumissionByReferenceNumber(@PathVariable String referenceNumber) {
         return soumissionService.getSoumissionByReferenceNumber(referenceNumber);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/soumissions/{id}")
     public void deleteSoumissionById(@PathVariable Long id) {
         soumissionService.deleteSoumissionById(id);
     }
 
-    @GetMapping("/avecgestion")
+    @GetMapping("/soumissions/avecgestion")
     public List<Soumission> getSoumissionsAvecGestion() {
         return soumissionService.getSoumissionsAvecGestion();
     }
 
-    @GetMapping("/sansgestion")
+    @GetMapping("/soumissions/sansgestion")
     public List<Soumission> getSoumissionsSansGestion() {
         return soumissionService.getSoumissionsSansGestion();
     }
