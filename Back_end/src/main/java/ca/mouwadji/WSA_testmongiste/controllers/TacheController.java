@@ -17,33 +17,33 @@ import ca.mouwadji.WSA_testmongiste.service.IAservice.IATacheService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/taches")
+@RequestMapping("/api")
 public class TacheController {
 
     @Autowired
     private IATacheService tacheService;
 
-    @GetMapping("/")
+    @GetMapping("/taches")
     public List<Tache> getAllTaches() {
         return tacheService.getAllTaches();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/taches/{id}")
     public Tache getTacheById(@PathVariable Long id) {
         return tacheService.getTacheById(id);
     }
 
-    @PostMapping("/")
+    @PostMapping("/taches")
     public Tache addTache(@RequestBody Tache tache) {
         return tacheService.addTache(tache);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/taches/{id}")
     public Tache updateTache(@PathVariable Long id, @RequestBody Tache tache) {
         return tacheService.updateTache(id, tache);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/taches/{id}")
     public void deleteTache(@PathVariable Long id) {
         tacheService.deleteTache(id);
     }

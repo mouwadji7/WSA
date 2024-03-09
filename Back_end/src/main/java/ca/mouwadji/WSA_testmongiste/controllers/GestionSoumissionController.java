@@ -20,7 +20,7 @@ import ca.mouwadji.WSA_testmongiste.service.IAservice.IAGestionSoumissionService
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/gestionsoumissions")
+@RequestMapping("/api")
 public class GestionSoumissionController {
 
     private final IAGestionSoumissionService gestionSoumissionService;
@@ -30,7 +30,7 @@ public class GestionSoumissionController {
         this.gestionSoumissionService = gestionSoumissionService;
     }
 
-    @PostMapping
+    @RequestMapping("/gestionsoumissions")
     public GestionSoumission saveGestionSoumission(@RequestBody GestionSoumission gestionSoumission) {
         // Ajouter les tâches aux véhicules et aux employés
         List<Tache> taches = gestionSoumission.getTaches();
@@ -56,27 +56,27 @@ public class GestionSoumissionController {
     }
     
 
-    @GetMapping("/{id}")
+    @GetMapping("/gestionsoumissions/{id}")
     public GestionSoumission getGestionSoumissionById(@PathVariable Long id) {
         return gestionSoumissionService.getGestionSoumissionById(id);
     }
 
-    @GetMapping("/taches/{id}")
+    @GetMapping("/gestionsoumissions/taches/{id}")
     public List<Tache> getTachesByGestionSoumissionId(@PathVariable Long id) {
         return gestionSoumissionService.getTachesByGestionSoumissionId(id);
     }
 
-    @GetMapping("/employes/{id}")
+    @GetMapping("/gestionsoumissions/employes/{id}")
     public List<Employe> getEmployesByGestionSoumissionId(@PathVariable Long id) {
         return gestionSoumissionService.getEmployesByGestionSoumissionId(id);
     }
 
-    @GetMapping("/vehicules/{id}")
+    @GetMapping("/gestionsoumissions/vehicules/{id}")
     public List<Vehicule> getVehiculesByGestionSoumissionId(@PathVariable Long id) {
         return gestionSoumissionService.getVehiculesByGestionSoumissionId(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/gestionsoumissions/{id}")
     public void deleteGestionSoumissionById(@PathVariable Long id) {
         // Récupérer la GestionSoumission à supprimer
         GestionSoumission gestionSoumission = gestionSoumissionService.getGestionSoumissionById(id);

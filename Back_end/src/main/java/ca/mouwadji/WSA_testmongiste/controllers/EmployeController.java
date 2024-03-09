@@ -18,33 +18,33 @@ import ca.mouwadji.WSA_testmongiste.service.IAservice.IAEmployeService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employes")
+@RequestMapping("/api")
 public class EmployeController {
 
     @Autowired
     private IAEmployeService employeService;
 
-    @GetMapping("/")
+    @GetMapping("/employes")
     public List<Employe> getAllEmployes() {
         return employeService.getAllEmployes();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/employes/{id}")
     public Employe getEmployeById(@PathVariable Long id) {
         return employeService.getEmployeById(id);
     }
 
-    @PostMapping("/")
+    @PostMapping("/employes/create")
     public Employe addEmploye(@RequestBody Employe employe) {
         return employeService.addEmploye(employe);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/employes/{id}")
     public Employe updateEmploye(@PathVariable Long id, @RequestBody Employe employe) {
         return employeService.updateEmploye(id, employe);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/employes/{id}")
     public void deleteEmploye(@PathVariable Long id) {
         employeService.deleteEmploye(id);
     }
