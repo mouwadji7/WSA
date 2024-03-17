@@ -1,64 +1,65 @@
-import React, { useState } from 'react';
-import Vehicle from './Vehile.js';
+import React, { useState } from "react";
+import axios from "./httpService.js"; // Assurez-vous que le chemin d'importation est correct
 
 function VehCreation({ setListeVehicules }) {
-    const [vehicleID, setVehicleID] = useState('');
-    const [type, setType] = useState('');
-    const [year, setYear] = useState('');
+  const [vehicleID, setVehicleID] = useState("");
+  const [type, setType] = useState("");
+  // Ajoutez d'autres états pour les propriétés du véhicule si nécessaire
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        
-        const newVehicle = new Vehicle(
-            vehicleID,
-            type,
-            year
-        );
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-        setListeVehicules((prevListeVehicules) => [...prevListeVehicules, newVehicle]);
+    const newVehicle = {
+      id: vehicleID, // Assurez-vous que le modèle de données correspond au backend
+      type: type,
+      // Ajoutez les autres propriétés du véhicule ici
+    };
 
-        setVehicleID('');
-        setType('');
-        setYear('');
-    }
+    axios
+      .post("/vehicules", newVehicle)
+      .then((response) => {
+        // Ajoutez le nouveau véhicule à la liste
+        setListeVehicules((prev) => [...prev, response.data]);
+        // Réinitialisez les champs
+        setVehicleID("");
+        setType("");
+        // Réinitialisez d'autres champs si nécessaire
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la création du véhicule:", error);
+      });
+  };
 
-    return (
-        <div className="col-sm-6 bg-dark text-white">
-            <div className="container pt-5">
-                <h1>Création de Véhicule</h1>
-                <form onSubmit={handleSubmit}>
-                    <div className="col mt-5">
-                        <div className="row">
-                            <div className="col">
-                                <label htmlFor="vehicleID">ID du Véhicule</label>
-                                <input type="text" name="vehicleID" className="form-control" value={vehicleID} onChange={(e) => setVehicleID(e.target.value)} required />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
-                                <label htmlFor="type">Type</label>
-                                <input type="text" name="type" className="form-control" value={type} onChange={(e) => setType(e.target.value)} required />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
-                                <label htmlFor="year">Année</label>
-                                <input type="text" name="year" className="form-control" value={year} onChange={(e) => setYear(e.target.value)} required />
-                            </div>
-                        </div>
-                        <div className="row mt-3">
-                            <div className="col">
-                                <button type="submit" className="btn btn-primary">Créer Véhicule</button>
-                            </div>
-                            <div className="col">
-                                <button type="reset" className="btn btn-primary">Effacer</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    );
+  return (
+    <div className="col-sm-6 bg-dark text-white">
+      <div className="container pt-5">
+        <h2>Créer un nouveau véhicul</h2>
+        <form onSubmit={handleSubmit}>
+          {/* Champs de formulaire pour les propriétés du véhicule */}
+          <div>
+            <label>ID du Véhicule:</label>
+            <input
+              type="text"
+              value={vehicleID}
+              onChange={(e) => setVehicleID(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label>Type de Véhicule:</label>
+            <input
+              type="text"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              required
+            />
+          </div>
+          {/* Ajoutez d'autres champs pour les propriétés du véhicule */}
+          <button type="submit">Créer Véhicule</button>
+        </form>
+      </div>
+    </div>
+  );
 }
 
 export default VehCreation;
