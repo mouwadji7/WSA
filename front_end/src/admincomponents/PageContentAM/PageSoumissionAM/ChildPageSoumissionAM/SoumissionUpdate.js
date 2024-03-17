@@ -1,14 +1,43 @@
-import React from 'react';
+import React, { useState } from "react";
 
-function SoumissionUpdate() {
-    return (
-        <div className="col-sm-6 bg-dark text-white">
-        <div className="container pt-5">
-            <h1> Listes des soumissions Traites </h1>
-        </div>
-    </div>
+function SoumissionTraitee({ soumissions, setSoumissions }) {
+  const [selectedId, setSelectedId] = useState("");
+
+  const handleTraiter = (id) => {
+    const SoumissionUpdate = soumissions.map((soumission) =>
+      soumission.id === id ? { ...soumission, traitee: true } : soumission
     );
+
+    setSoumissions(SoumissionUpdate);
+  };
+
+  return (
+    <div>
+      <h2>Soumissions Traitées</h2>
+      {soumissions
+        .filter((soumission) => !soumission.traitee)
+        .map((soumission) => (
+          <div key={soumission.id}>
+            <p>
+              {soumission.nom} - {soumission.details}
+            </p>
+            <button onClick={() => handleTraiter(soumission.id)}>
+              Marquer comme traité
+            </button>
+          </div>
+        ))}
+      <div>
+        <h3>Soumissions Déjà Traitées</h3>
+        {soumissions
+          .filter((soumission) => soumission.traitee)
+          .map((soumission) => (
+            <p key={soumission.id}>
+              {soumission.nom} - {soumission.details}
+            </p>
+          ))}
+      </div>
+    </div>
+  );
 }
 
-
-export default SoumissionUpdate;
+export default SoumissionTraitee;
