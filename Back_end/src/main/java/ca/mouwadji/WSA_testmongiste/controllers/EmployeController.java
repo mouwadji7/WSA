@@ -18,7 +18,7 @@ import ca.mouwadji.WSA_testmongiste.service.IAservice.IAEmployeService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/employes")
+@RequestMapping("/api")
 public class EmployeController {
 
     @Autowired
