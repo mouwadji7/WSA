@@ -13,10 +13,11 @@ import PageCarriere from './components/SousPageFooter/Carriere';
 import PageDon from './components/SousPageFooter/Don';
 import PageHistoires from './components/SousPageFooter/Histoires';
 import PageVotreAvis from './components/SousPageFooter/VotreAvis';
-import PageDisplay from './components/PageContent/PageDisplay';
+import StatusPage from './components/SousPageFooter/Statut';
+import PaymentPage from './components/SousPageFooter/Paye';
 import PageForm from './components/PageContent/PageForm1';
 import PageFormV from './components/PageContent/PageForm2';
-import Principale_Page from './components/PageContent/Principale_Page';
+import PageDisplay from './components/PageContent/PageDisplay';
 import SoumissionFaites from './components/PageContent/SoumissionFaites';
 
 function App() {
@@ -41,10 +42,10 @@ function App() {
           <PageHeader onLogin={handleLogin} />
         
           <Routes>
+          <Route path="/" element={<PageContent />} />
 
             {/* Routes des elements de pagecontent start */}
 
-            <Route path="/" element={<Principale_Page/>} />
             <Route path="/form" element={<PageForm />} />
             <Route path="/formv" element={<PageFormV/>} />
             
@@ -58,6 +59,8 @@ function App() {
             <Route path="/don" element={<PageDon />} />
             <Route path="/histoires" element={<PageHistoires />} />
             <Route path="/votreavis" element={<PageVotreAvis />} />
+            <Route path="/payment" element={<PaymentPage />} /> {/* Route de la page de paiement */}
+            <Route path="/status" element={<StatusPage />} /> {/* Route de la page de statut */}
           </Routes>
           <PageFooter />
         </div>
