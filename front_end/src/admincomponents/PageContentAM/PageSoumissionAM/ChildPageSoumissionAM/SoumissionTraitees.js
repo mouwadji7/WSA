@@ -3,6 +3,7 @@ import React from "react";
 const soumissionsTraitees = [
   { id: 1, nom: "Client 1", status: "traité" },
   { id: 2, nom: "Client 2", status: "traité" },
+  { id: 3, nom: "Client 3", status: "traité" },
 ];
 
 function SoumissionTraitee() {
