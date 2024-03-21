@@ -1,30 +1,3 @@
-.carriere-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-.carriere-container h1 {
-    font-size: 28px;
-    color: #333;
-}
-
-.carriere-container h2 {
-    font-size: 24px;
-    color: #333;
-}
-
-.carriere-container p {
-    font-size: 16px;
-    line-height: 1.6;
-    color: #555;
-}
-
 .carriere-container ul {
     list-style-type: none;
-    padding-left: 0;
-}
-
-.carriere-container li {
-    margin-bottom: 10px;
-}
+  }
