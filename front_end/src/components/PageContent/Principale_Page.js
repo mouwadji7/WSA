@@ -4,6 +4,9 @@ import "./CSSPrincipale_Page.css";
 function Principale_Page({ onNavigateToForm }) {
   const handleSubmit = (event) => {
     event.preventDefault();
+    // This function prevents the default form submission behavior
+    // and invokes the onNavigateToForm function passed as a prop
+    // which triggers navigation to the form page.
     onNavigateToForm();
   };
 
