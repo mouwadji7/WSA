@@ -1,26 +1,36 @@
 import React, { useState } from 'react';
-import Vehicle from './Vehile.js';
+import axiosConfig from '../../../../axiosConfig';
 
-function VehCreation({ setListeVehicules }) {
-    const [vehicleID, setVehicleID] = useState('');
+function VehCreation() {
+    const [nom, setNom] = useState('');
     const [type, setType] = useState('');
-    const [year, setYear] = useState('');
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        
-        const newVehicle = new Vehicle(
-            vehicleID,
-            type,
-            year
-        );
-
-        setListeVehicules((prevListeVehicules) => [...prevListeVehicules, newVehicle]);
-
-        setVehicleID('');
-        setType('');
-        setYear('');
+    
+        const now = Date.now();
+        const donnernom = nom + now; // Correction de la déclaration de la variable
+        const newVehicle = {
+            nom: donnernom, // Utilisation de la variable `donnernom` pour définir le nom du véhicule
+            type: type,
+            tachesAssignes: [] // La liste des tâches assignées sera vide lors de la création
+        };
+    
+        axiosConfig.post('/vehicules/create', newVehicle)
+            .then(response => {
+                console.log('Véhicule créé avec succès:', response.data);
+                // Vous pouvez ajouter ici une logique pour gérer la réussite de la création du véhicule
+            })
+            .catch(error => {
+                console.error('Erreur lors de la création du véhicule:', error);
+                // Vous pouvez ajouter ici une logique pour gérer l'échec de la création du véhicule
+            });
+    
+        // Réinitialiser les champs après la soumission du formulaire
+        setNom(''); // Réinitialiser le nom
+        setType(''); // Réinitialiser le type
     }
+    
 
     return (
         <div className="col-sm-6 bg-dark text-white">
@@ -30,20 +40,14 @@ function VehCreation({ setListeVehicules }) {
                     <div className="col mt-5">
                         <div className="row">
                             <div className="col">
-                                <label htmlFor="vehicleID">ID du Véhicule</label>
-                                <input type="text" name="vehicleID" className="form-control" value={vehicleID} onChange={(e) => setVehicleID(e.target.value)} required />
+                                <label htmlFor="nom">Nom</label>
+                                <input type="text" name="nom" className="form-control" value={nom} onChange={(e) => setNom(e.target.value)} required />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col">
                                 <label htmlFor="type">Type</label>
                                 <input type="text" name="type" className="form-control" value={type} onChange={(e) => setType(e.target.value)} required />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
-                                <label htmlFor="year">Année</label>
-                                <input type="text" name="year" className="form-control" value={year} onChange={(e) => setYear(e.target.value)} required />
                             </div>
                         </div>
                         <div className="row mt-3">

@@ -23,9 +23,9 @@ function PageVehiculesAM() {
                         <div className="btn-group-vertical mt-5">
                             <button type="button" className="btn btn-dark mb-4" onClick={() => handleClick(<VehCreation setListeVehicules={setListeVehicules} />)}>Créer Véhicule</button>
                             <button type="button" className="btn btn-dark mb-4" onClick={() => handleClick(<VehDisplay listeVehicules={listeVehicules} />)}>Lister Véhicules</button>
-                            <button type="button" className="btn btn-dark mb-4" data-bs-toggle="tooltip" title="Ici l'on pourras chercher specifiquement un vehicule le supprimer ou gerer ses taches ">Recherche Vehicules</button>
-                            <button type="button" className="btn btn-dark mb-4">Gerer les taches</button>
-                            <button type="button" className="btn btn-dark mb-4">Triee les vehicules non assigne</button>
+                            <button type="button" className="btn btn-dark mb-4" data-bs-toggle="tooltip" title="Ici l'on pourras chercher specifiquement un vehicule le supprimer ou gerer ses taches ">A revoir</button>
+                            <button type="button" className="btn btn-dark mb-4">A revoir</button>
+                            <button type="button" className="btn btn-dark mb-4">A revoir</button>
                         </div>
                     </div>
                 </div>

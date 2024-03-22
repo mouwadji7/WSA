@@ -4,7 +4,6 @@ import PageFormV from "./PageForm2";
 import PageDisplay from "./PageDisplay";
 import SoumissionFaites from "./SoumissionFaites";
 import Principale_Page from "./Principale_Page";
-import "./CSSPageContent.css";
 
 const steps = {
   PRINCIPALE: "Principale",
@@ -20,12 +19,14 @@ function PageContent() {
   const [formDataV, setFormDataV] = useState(null);
 
   const handleFormSubmit = (formData) => {
-    const newSubmissionReference = generateUniqueReference();
+    const now = Date.now();
+    const threeFirstLettersOfLastName = formData.lastName.substr(0, 3);
+    const newSubmissionReference = `${threeFirstLettersOfLastName}-${now}`;
     const submissionData = {
       ...formData,
       submissionReference: newSubmissionReference,
     };
-
+  
     setFormData(submissionData);
     setCurrentPage(steps.PAGE_FORM_V);
   };
