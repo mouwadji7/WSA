@@ -1,7 +1,39 @@
 import React from "react";
+import axiosConfig from '../../axiosConfig';
 import "./CSSPageDisplay.css";
 
 function PageDisplay({ formData, formDataV, onConfirm, onCancel, onModify }) {
+
+  const sendSubmissionToDatabase = async () => {
+    try {
+      // Créer l'objet de données de soumission à envoyer au backend
+      const submissionData = {
+        referenceNumber: formData.submissionReference,
+        nom: formData.nom,
+        prenom: formData.prenom,
+        email: formData.email,
+        telephone: formData.telephone,
+        adresseDepart: formData.adresseDepart,
+        adresseDestination: formData.adresseDestination,
+        dateDemenagement: formData.dateDemenagement,
+        heureDemenagement: formData.heureDemenagement,
+        typeHabitation: formDataV.typeHabitation,
+        emplacementHabitation: formDataV.emplacementHabitation,
+        chambresACharger: formDataV.chambresACharger,
+      };
+
+      // Envoyer les données de soumission à la base de données via une requête POST
+      const response = await axiosConfig.post('/soumissions/create', submissionData);
+      console.log('Soumission envoyée à la base de données :', response.data);
+
+      // Activer la fonction onConfirm pour afficher la confirmation
+      onConfirm();
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi de la soumission à la base de données :', error);
+      // Gérer l'erreur
+    }
+  };
+
   return (
     <main main class="container mt-5 pt-5">
       <h2 className="mb-4">Révision des informations</h2>
@@ -48,7 +80,7 @@ function PageDisplay({ formData, formDataV, onConfirm, onCancel, onModify }) {
       </div>
 
       <div className="mt-4">
-        <button className="btn btn-primary me-3" onClick={onConfirm}>
+        <button className="btn btn-primary me-3" onClick={sendSubmissionToDatabase}>
           Confirmer
         </button>
         <button className="btn btn-primary me-3" onClick={onCancel}>

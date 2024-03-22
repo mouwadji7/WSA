@@ -1,7 +1,6 @@
 import React from "react";
-import "./CSSPrincipale_Page.css";
 
-function Principale_Page({ onNavigateToForm }) {
+function PrincipalePage({ onNavigateToForm }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     // This function prevents the default form submission behavior
@@ -98,4 +97,4 @@ function Principale_Page({ onNavigateToForm }) {
   );
 }
 
-export default Principale_Page;
+export default PrincipalePage;

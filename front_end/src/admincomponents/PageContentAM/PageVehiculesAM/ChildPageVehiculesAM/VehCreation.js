@@ -16,7 +16,7 @@ function VehCreation() {
             tachesAssignes: [] // La liste des tâches assignées sera vide lors de la création
         };
     
-        axios.post('/vehicules/create', newVehicle)
+        axiosConfig.post('/vehicules/create', newVehicle)
             .then(response => {
                 console.log('Véhicule créé avec succès:', response.data);
                 // Vous pouvez ajouter ici une logique pour gérer la réussite de la création du véhicule

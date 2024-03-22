@@ -3,7 +3,9 @@ import VehCreation from './ChildPageVehiculesAM/VehCreation';
 import VehDisplay from './ChildPageVehiculesAM/VehDisplay';
 
 function PageVehiculesAM() {
-    
+    const [listeVehicules, setListeVehicules] = useState([]);
+    const [currentDisplay, setCurrentDisplay] = useState(<VehCreation setListeVehicules={setListeVehicules} />);
+
     const handleClick = (displayComponent) => {
         setCurrentDisplay(displayComponent);
     };
@@ -19,8 +21,8 @@ function PageVehiculesAM() {
                         <h1 className="text-dark">Cote Management </h1>
 
                         <div className="btn-group-vertical mt-5">
-                            <button type="button" className="btn btn-dark mb-4" onClick={() => handleClick(<VehCreation/>)}>Créer Véhicule</button>
-                            <button type="button" className="btn btn-dark mb-4" onClick={() => handleClick(<VehDisplay />)}>Lister Véhicules</button>
+                            <button type="button" className="btn btn-dark mb-4" onClick={() => handleClick(<VehCreation setListeVehicules={setListeVehicules} />)}>Créer Véhicule</button>
+                            <button type="button" className="btn btn-dark mb-4" onClick={() => handleClick(<VehDisplay listeVehicules={listeVehicules} />)}>Lister Véhicules</button>
                             <button type="button" className="btn btn-dark mb-4" data-bs-toggle="tooltip" title="Ici l'on pourras chercher specifiquement un vehicule le supprimer ou gerer ses taches ">A revoir</button>
                             <button type="button" className="btn btn-dark mb-4">A revoir</button>
                             <button type="button" className="btn btn-dark mb-4">A revoir</button>

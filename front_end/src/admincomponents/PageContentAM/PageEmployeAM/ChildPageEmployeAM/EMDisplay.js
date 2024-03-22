@@ -6,7 +6,7 @@ function EMDisplay() {
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/employes')
+    axiosConfig.get('/api/employes')
       .then(response => {
         setEmployees(response.data);
       })
