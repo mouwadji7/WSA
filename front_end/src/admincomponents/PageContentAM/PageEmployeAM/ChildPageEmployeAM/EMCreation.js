@@ -1,81 +1,64 @@
 import React, { useState } from 'react';
-import Employes from './Employee.js'; // Importez la classe Employes depuis son fichier
+import axiosConfig from '../../../../axiosConfig';
 
-function EMCreation({ setListeEmployes }) { // Déstructurez setListeEmployes depuis les props
-    const [employeeID, setEmployeeID] = useState('');
-    const [employeefirstName, setEmployeefirstName] = useState('');
-    const [employeelastName, setEmployeelastName] = useState('');
-    const [employeeemail, setEmployeeemail] = useState('');
-    const [employeephoneNumber, setEmployeephoneNumber] = useState('');
+function EMCreation() {
+  const [nom, setNom] = useState('');
+  const [prenom, setPrenom] = useState('');
+  const [email, setEmail] = useState('');
+  const [telephone, setTelephone] = useState('');
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        
-        // Création d'un nouvel objet Employes
-        const nouvelEmploye = new Employes(
-            employeeID,
-            employeefirstName,
-            employeelastName,
-            employeeemail,
-            employeephoneNumber
-        );
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-        // Mise à jour de la liste des employés en utilisant la fonction passée en tant que prop
-        setListeEmployes((prevListeEmployes) => [...prevListeEmployes, nouvelEmploye]);
+    const newEmployee = {
+      nom: nom,
+      prenom: prenom,
+      email: email,
+      telephone: telephone,
+      tachesAssignes: [] // Par défaut, la liste des tâches assignées est vide
+    };
 
-        // Réinitialisation des champs du formulaire
-        setEmployeeID('');
-        setEmployeefirstName('');
-        setEmployeelastName('');
-        setEmployeeemail('');
-        setEmployeephoneNumber('');
-    }
+    axiosConfig.post('/employes', newEmployee)
+      .then(response => {
+        console.log('Employé créé avec succès:', response.data);
+        // Ajoutez ici une logique pour gérer la réussite de la création de l'employé
+      })
+      .catch(error => {
+        console.error('Erreur lors de la création de l\'employé:', error);
+        // Ajoutez ici une logique pour gérer l'échec de la création de l'employé
+      });
 
-    return (
-        <div className="col-sm-6 bg-dark text-white">
-            <div className="container pt-5">
-                <h1>Creation Employes</h1>
-                <form onSubmit={handleSubmit} >
-                    <div className="col mt-5">
-                        <div className="row">
-                            <div className="col">
-                                <label htmlFor="employeeID">Employes ID</label>
-                                <input type="text" name="employeeID" className="form-control" value={employeeID} onChange={(e) => setEmployeeID(e.target.value)} required />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
-                                <label htmlFor="employeefirstName">Nom</label>
-                                <input type="text" name="employeefirstName" className="form-control" value={employeefirstName} onChange={(e) => setEmployeefirstName(e.target.value)} required />
-                            </div>
-                            <div className="col">
-                                <label htmlFor="employeelastName">Prenom</label>
-                                <input type="text" name="employeelastName" className="form-control" value={employeelastName} onChange={(e) => setEmployeelastName(e.target.value)} required />
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
-                                <label htmlFor="employeeemail">Adresse courriel</label>
-                                <input type="email" name="employeeemail" className="form-control" value={employeeemail} onChange={(e) => setEmployeeemail(e.target.value)} required />
-                            </div>
-                            <div className="col">
-                                <label htmlFor="employeephoneNumber">téléphone</label>
-                                <input type="tel" name="employeephoneNumber" className="form-control" value={employeephoneNumber} onChange={(e) => setEmployeephoneNumber(e.target.value)} required />
-                            </div>
-                        </div>
-                        <div className="row mt-3">
-                            <div className="col">
-                                <button type="submit" className="btn btn-primary">Creer Employes</button>
-                            </div>
-                            <div className="col">
-                                <button type="reset" className="btn btn-primary">Effacer</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
+    // Réinitialiser les champs du formulaire après la soumission
+    setNom('');
+    setPrenom('');
+    setEmail('');
+    setTelephone('');
+  };
+
+  return (
+    <div className="container mt-5">
+      <h1 className="text-white mb-4">Créer un nouvel employé</h1>
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
+          <label htmlFor="nom" className="form-label text-white">Nom :</label>
+          <input type="text" className="form-control" id="nom" value={nom} onChange={(e) => setNom(e.target.value)} required />
         </div>
-    );
+        <div className="mb-3">
+          <label htmlFor="prenom" className="form-label text-white">Prénom :</label>
+          <input type="text" className="form-control" id="prenom" value={prenom} onChange={(e) => setPrenom(e.target.value)} required />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label text-white">Email :</label>
+          <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        </div>
+        <div className="mb-3">
+          <label htmlFor="telephone" className="form-label text-white">Téléphone :</label>
+          <input type="tel" className="form-control" id="telephone" value={telephone} onChange={(e) => setTelephone(e.target.value)} required />
+        </div>
+        <button type="submit" className="btn btn-primary">Créer</button>
+      </form>
+    </div>
+  );
 }
 
 export default EMCreation;

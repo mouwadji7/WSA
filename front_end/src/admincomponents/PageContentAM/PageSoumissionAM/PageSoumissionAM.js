@@ -21,10 +21,10 @@ function PageSoumissionAM() {
 
                         <div className="btn-group-vertical mt-5">
                             <button type="button" className="btn btn-dark mb-4" onClick={() => handleClick(<SoumissionSent/>)}>Soumission recu</button>
-                            <button type="button" className="btn btn-dark mb-4" onClick={() => handleClick(<SoumissionUpdate/>)}>Soumission traites</button>
-                            <button type="button" className="btn btn-dark mb-4" onClick={() => handleClick(<SoumissionDone/>)}>Soumission en attente de demenagement</button>
-                            <button type="button" className="btn btn-dark mb-4">Gerer les taches</button>
-                            <button type="button" className="btn btn-dark mb-4">Rechercher soumission </button>
+                            <button type="button" className="btn btn-dark mb-4" onClick={() => handleClick(<SoumissionDone/>)}>Soumission traites</button>
+                            <button type="button" className="btn btn-dark mb-4" onClick={() => handleClick(<SoumissionUpdate/>)}>A Revoi</button>
+                            <button type="button" className="btn btn-dark mb-4">A revoir</button>
+                            <button type="button" className="btn btn-dark mb-4">A revoir</button>
                         </div>
                     </div>
                 </div>

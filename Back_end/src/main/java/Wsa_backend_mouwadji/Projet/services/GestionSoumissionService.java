@@ -18,6 +18,8 @@ import Wsa_backend_mouwadji.Projet.services.IAservice.IAVehiculeService;
 @Service
 public class GestionSoumissionService implements IAGestionSoumissionService {
     
+    
+
     @Autowired
     private GestionSoumissionRepository gestionSoumissionRepository;
 
@@ -34,7 +36,7 @@ public class GestionSoumissionService implements IAGestionSoumissionService {
     private IASoumissionService soumissionService;
 
     
-
+    
     @Override
     public GestionSoumission createGestionSoumission(GestionSoumission gestionSoumission) {
         // Créer une nouvelle tâche
@@ -68,6 +70,10 @@ public class GestionSoumissionService implements IAGestionSoumissionService {
         return gestionSoumission;
     }
 
+    @Override
+    public List<GestionSoumission> getGestionSoumissionAll() {
+        return gestionSoumissionRepository.findAll();
+    }
     
     @Override
 public void deleteGestionSoumission(String id) {

@@ -29,6 +29,12 @@ public class GestionSoumissionController {
         return gestionSoumissionService.createGestionSoumission(gestionSoumission);
     }
 
+    @GetMapping("/gestionSoumissions/all")
+    public ResponseEntity<List<GestionSoumission>> getGestionSoumissionAll() {
+        List<GestionSoumission> gestionSoumissions = gestionSoumissionService.getGestionSoumissionAll();
+        return new ResponseEntity<>(gestionSoumissions, HttpStatus.OK);
+    }
+
     @DeleteMapping("/gestionSoumissions/delete/{id}")
     public void deleteGestionSoumission(@PathVariable String id) {
         gestionSoumissionService.deleteGestionSoumission(id);

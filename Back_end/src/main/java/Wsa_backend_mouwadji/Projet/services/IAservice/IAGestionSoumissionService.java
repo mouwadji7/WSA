@@ -12,4 +12,5 @@ public interface IAGestionSoumissionService {
     void updateTache(String id, Tache tache);
     void updateSoumission(String id, Soumission soumission);
     GestionSoumission getGestionSoumissionById(String id);
+    List<GestionSoumission> getGestionSoumissionAll();
 }
