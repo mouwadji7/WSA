@@ -1,91 +1,59 @@
-import React, { useState, useEffect } from 'react';
-import axiosConfig from '../../../../axiosConfig';
+import React, { useState, useEffect } from "react";
+import axiosConfig from "../../../../axiosConfig";
+import SoumissionDoneDisplay from "./SoumissionDoneDisplay"; // Importer le composant SoumissionDoneDisplay
 
-function SoumissionDone() {
-    const [gestionSoumissions, setGestionSoumissions] = useState([]);
-    const [selectedSoumission, setSelectedSoumission] = useState(null);
-    const [vehicules, setVehicules] = useState([]);
-    const [employes, setEmployes] = useState([]);
+const SoumissionDone = () => {
+  const [gestionSoumissions, setGestionSoumissions] = useState([]);
+  const [selectedGestionSoumission, setSelectedGestionSoumission] =
+    useState(null);
 
-    useEffect(() => {
-        axiosConfig.get('/gestionSoumissions/all')
-            .then(response => {
-                setGestionSoumissions(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching gestion soumissions:', error);
-            });
-    }, []);
+  useEffect(() => {
+    fetchGestionSoumissions();
+  }, []);
 
-    useEffect(() => {
-        if (selectedSoumission) {
-            axiosConfig.get(`/taches/${selectedSoumission.tacheId}`)
-                .then(response => {
-                    setVehicules(response.data.vehiculesAssignes);
-                    setEmployes(response.data.employesAssignes);
-                })
-                .catch(error => {
-                    console.error('Error fetching tache details:', error);
-                });
-        }
-    }, [selectedSoumission]);
+  const fetchGestionSoumissions = async () => {
+    try {
+      const response = await axiosConfig.get("/gestionSoumissions/all");
+      setGestionSoumissions(response.data);
+    } catch (error) {
+      console.error("Error fetching gestion soumissions:", error);
+    }
+  };
 
-    const handleSoumissionClick = (soumissionId) => {
-        axiosConfig.get(`/soumissions/${soumissionId}`)
-            .then(response => {
-                setSelectedSoumission(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching soumission details:', error);
-            });
-    };
+  const handleGestionSoumissionClick = (gestionSoumission) => {
+    setSelectedGestionSoumission(gestionSoumission);
+  };
 
-    const handleCancel = () => {
-        setSelectedSoumission(null); // Met à jour l'état pour fermer le modal
-    };
+  const handleCancelClick = () => {
+    setSelectedGestionSoumission(null); // Réinitialise selectedGestionSoumission à null
+  };
 
-    const handleDelete = () => {
-        if (selectedSoumission) {
-            const gestionSoumissionId = selectedSoumission.id;
-            axiosConfig.delete(`/gestionSoumissions/delete/${gestionSoumissionId}`)
-                .then(response => {
-                    // Mettre à jour la liste des gestionSoumissions après la suppression
-                    setGestionSoumissions(prevGestionSoumissions => {
-                        return prevGestionSoumissions.filter(gestionSoumission => gestionSoumission.id !== gestionSoumissionId);
-                    });
-                    // Fermer le modal
-                    setSelectedSoumission(null);
-                })
-                .catch(error => {
-                    console.error('Error deleting gestion soumission:', error);
-                });
-        }
-    };
-
-    return (
-        <div className="col-sm-6 bg-dark text-white">
-            <div className="container pt-5">
-                <h1>Listes des soumissions dont le déménagement est prêt </h1>
-                <ul>
-                    {gestionSoumissions.map(gestionSoumission => (
-                        <li key={gestionSoumission.id} onClick={() => handleSoumissionClick(gestionSoumission.soumissionId)}>
-                            {gestionSoumission.soumissionId}
-                        </li>
-                    ))}
-                </ul>
-                {selectedSoumission && (
-                    <div>
-                        <h2>Détails de la soumission</h2>
-                        <p>Soumission ID: {selectedSoumission.id}</p>
-                        <p>Véhicules assignés: {vehicules.join(', ')}</p>
-                        <p>Employés assignés: {employes.join(', ')}</p>
-                        <button onClick={handleCancel}>Annuler</button>
-                        <button onClick={handleDelete}>Supprimer</button>
-                    </div>
-                )}
-            </div>
-        </div>
-    );
-}
+  return (
+    <div className="col-sm-6 bg-dark text-white">
+      <div className="container pt-5">
+        <h2>Liste des Gestion Soumissions</h2>
+        <ul>
+          {gestionSoumissions.map((gestionSoumission) => (
+            <li
+              key={gestionSoumission.id}
+              onClick={() => handleGestionSoumissionClick(gestionSoumission)}
+            >
+              {gestionSoumission.id} - {gestionSoumission.tache.nom}
+            </li>
+          ))}
+        </ul>
+      </div>
+      {selectedGestionSoumission && (
+        <SoumissionDoneDisplay gestionSoumission={selectedGestionSoumission} />
+      )}
+      {/* Bouton Cancel */}
+      {selectedGestionSoumission && (
+        <button className="btn btn-danger mt-3" onClick={handleCancelClick}>
+          Cancel
+        </button>
+      )}
+    </div>
+  );
+};
 
 export default SoumissionDone;
