@@ -18,6 +18,10 @@ import lombok.ToString;
 public class Tache {
     @Id
     private String id;
+    private String nom;
+    private String description;
+    private String dateDebut;
+    private String dateFin;
     private List<String> vehiculesAssignes;
     private List<String> employesAssignes;
 }

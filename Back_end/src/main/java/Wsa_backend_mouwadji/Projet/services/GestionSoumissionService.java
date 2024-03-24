@@ -39,34 +39,6 @@ public class GestionSoumissionService implements IAGestionSoumissionService {
     
     @Override
     public GestionSoumission createGestionSoumission(GestionSoumission gestionSoumission) {
-        // Créer une nouvelle tâche
-        Tache tache = new Tache();
-        tache = tacheService.createTache(tache);
-        gestionSoumission.setTacheId(tache.getId());
-        gestionSoumission.setSoumissionId(gestionSoumission.getSoumissionId());
-        gestionSoumissionRepository.save(gestionSoumission);
-
-        // Affecter la tâche aux employés associés
-        List<String> employesIds = tache.getEmployesAssignes();
-        if (employesIds != null && !employesIds.isEmpty()) {
-            for (String employeId : employesIds) {
-                employeService.addTask(employeId, tache.getId());
-            }
-        }
-
-        // Affecter la tâche aux véhicules associés
-        List<String> vehiculesIds = tache.getVehiculesAssignes();
-        if (vehiculesIds != null && !vehiculesIds.isEmpty()) {
-            for (String vehiculeId : vehiculesIds) {
-                vehiculeService.addTask(vehiculeId, tache.getId());
-            }
-        }
-
-        // Mettre à jour la soumission
-        Soumission soumission = soumissionService.getSoumissionById(gestionSoumission.getSoumissionId());
-        soumission.setGerer(true);
-        soumissionService.updateSoumission(soumission.getId(), soumission);
-        
         return gestionSoumission;
     }
 
