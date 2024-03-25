@@ -1,5 +1,7 @@
 package Wsa_backend_mouwadji.Projet.services.IAservice;
 
+import java.util.List;
+
 import Wsa_backend_mouwadji.Projet.models.GestionSoumission;
 import Wsa_backend_mouwadji.Projet.models.Soumission;
 import Wsa_backend_mouwadji.Projet.models.Tache;

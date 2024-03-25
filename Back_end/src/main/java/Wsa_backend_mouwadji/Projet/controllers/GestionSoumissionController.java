@@ -1,5 +1,8 @@
 package Wsa_backend_mouwadji.Projet.controllers;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import Wsa_backend_mouwadji.Projet.models.Employe;
 import Wsa_backend_mouwadji.Projet.models.GestionSoumission;
 import Wsa_backend_mouwadji.Projet.models.Soumission;
 import Wsa_backend_mouwadji.Projet.models.Tache;
+import Wsa_backend_mouwadji.Projet.services.IAservice.IAEmployeService;
 import Wsa_backend_mouwadji.Projet.services.IAservice.IAGestionSoumissionService;
+import Wsa_backend_mouwadji.Projet.services.IAservice.IATacheService;
+import Wsa_backend_mouwadji.Projet.services.IAservice.IAVehiculeService;
 
 @RestController
 @RequestMapping("/api")
@@ -24,45 +31,62 @@ public class GestionSoumissionController {
     @Autowired
     private IAGestionSoumissionService gestionSoumissionService;
 
+    @Autowired
+    private IAEmployeService employeService;
+
+    @Autowired
+    private IAVehiculeService vehiculeService;
+
+    @Autowired
+    private IATacheService tacheService;
+
     @PostMapping("/gestionSoumissions/create")
-public ResponseEntity<GestionSoumission> createGestionSoumission(@RequestBody GestionSoumissionRequest request) {
-    Tache tache = new Tache();
-    tache.setNom(request.getTache().getNom());
-    tache.setDescription(request.getTache().getDescription());
-    tache.setDateDebut(request.getTache().getDateDebut());
-    tache.setDateFin(request.getTache().getDateFin());
-    tache.setEmployesAssignes(request.getTache().getEmployesAssignes());
-    tache.setVehiculesAssignes(request.getTache().getVehiculesAssignes());
-
-    // Ajoutez l'ID de la tâche à tous les employés assignés
-    for (String employeId : request.getTache().getEmployesAssignes()) {
-        Employe employe = employeService.getEmployeById(employeId);
-        if (employe != null) {
-            employe.addTacheAssignee(tache.getId());
-            employeService.updateEmploye(employeId, employe);
+public ResponseEntity<GestionSoumission> createGestionSoumission(@RequestBody Map<String, Object> requestData) {
+    try {
+        if (requestData == null || !requestData.containsKey("tache") || !requestData.containsKey("soumissionId")) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-    }
 
-    // Ajoutez l'ID de la tâche à tous les véhicules assignés
-    for (String vehiculeId : request.getTache().getVehiculesAssignes()) {
-        Vehicule vehicule = vehiculeService.getVehiculeById(vehiculeId);
-        if (vehicule != null) {
-            vehicule.addTacheAssignee(tache.getId());
-            vehiculeService.updateVehicule(vehiculeId, vehicule);
+        Map<String, Object> tacheData = (Map<String, Object>) requestData.get("tache");
+
+        Tache tache = new Tache();
+        tache.setNom((String) tacheData.get("nom"));
+        tache.setDescription((String) tacheData.get("description"));
+        tache.setDateDebut((String) tacheData.get("dateDebut"));
+        tache.setDateFin((String) tacheData.get("dateFin"));
+        tache.setEmployesAssignes((List<String>) tacheData.get("employesAssignes"));
+        tache.setVehiculesAssignes((List<String>) tacheData.get("vehiculesAssignes"));
+
+        // Enregistrer la tâche dans la base de données
+        tache = tacheService.createTache(tache);
+
+        // Ajouter l'ID de la tâche à tous les employés assignés
+        for (String employeId : tache.getEmployesAssignes()) {
+            Employe employe = employeService.getEmployeById(employeId);
+            if (employe != null) {
+                employe.getTachesAssignes().add(tache.getId());
+                employeService.updateEmploye(employeId, employe);
+            }
         }
+
+        // Ajouter l'ID de la tâche à tous les véhicules assignés
+        for (String vehiculeId : tache.getVehiculesAssignes()) {
+            vehiculeService.addTask(vehiculeId, tache.getId()); // Utilisation de la méthode addTask
+        }
+
+        // Enregistrer la gestion de soumission avec l'ID de la soumission associée et l'ID de la tâche
+        GestionSoumission gestionSoumission = new GestionSoumission();
+        gestionSoumission.setSoumissionId((String) requestData.get("soumissionId"));
+        gestionSoumission.setTacheId(tache.getId());
+        gestionSoumission = gestionSoumissionService.createGestionSoumission(gestionSoumission);
+
+        return new ResponseEntity<>(gestionSoumission, HttpStatus.CREATED);
+    } catch (Exception e) {
+        return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-    // Enregistrez la tâche dans la base de données
-    tache = tacheService.createTache(tache);
-
-    // Enregistrez la gestion de soumission avec l'ID de la soumission associée et l'ID de la tâche
-    GestionSoumission gestionSoumission = new GestionSoumission();
-    gestionSoumission.setSoumissionId(request.getSoumissionId());
-    gestionSoumission.setTacheId(tache.getId());
-    gestionSoumission = gestionSoumissionService.createGestionSoumission(gestionSoumission);
-
-    return new ResponseEntity<>(gestionSoumission, HttpStatus.CREATED);
 }
+
+
 
     @GetMapping("/gestionSoumissions/all")
     public ResponseEntity<List<GestionSoumission>> getGestionSoumissionAll() {
@@ -91,12 +115,12 @@ public ResponseEntity<GestionSoumission> createGestionSoumission(@RequestBody Ge
     }
 
     @GetMapping("/gestionSoumissions/{id}")
-public ResponseEntity<GestionSoumission> getGestionSoumissionById(@PathVariable String id) {
-    GestionSoumission gestionSoumission = gestionSoumissionService.getGestionSoumissionById(id);
-    if (gestionSoumission != null) {
-        return new ResponseEntity<>(gestionSoumission, HttpStatus.OK);
-    } else {
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<GestionSoumission> getGestionSoumissionById(@PathVariable String id) {
+        GestionSoumission gestionSoumission = gestionSoumissionService.getGestionSoumissionById(id);
+        if (gestionSoumission != null) {
+            return new ResponseEntity<>(gestionSoumission, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
-}
 }
