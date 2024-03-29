@@ -22,11 +22,9 @@ import SoumissionFaites from './components/PageContent/SoumissionFaites';
 
 function App() {
   const [login, setLogin] = useState(false); // Initialiser l'état de connexion à false
-
   const handleLogin = () => {
     setLogin(!login); // Modifier l'état de connexion lors du clic sur le bouton Login
   };
-
   if (login) {
     return (
       <div>
@@ -40,33 +38,26 @@ function App() {
       <Router>
         <div>
           <PageHeader onLogin={handleLogin} />
-        
           <Routes>
-          <Route path="/" element={<PageContent />} />
-
-            {/* Routes des elements de pagecontent start */}
-
-            <Route path="/form" element={<PageForm />} />
-            <Route path="/formv" element={<PageFormV/>} />
-            
-            <Route path="/display" element={<PageDisplay/>} />
-            <Route path="/confirmed" element={<SoumissionFaites/>} />
-
-            {/* Routes des elements de pagecontent start */}
-
-            <Route path="/apropos" element={<PageApropos />} />
-            <Route path="/carriere" element={<PageCarriere />} />
-            <Route path="/don" element={<PageDon />} />
-            <Route path="/histoires" element={<PageHistoires />} />
-            <Route path="/votreavis" element={<PageVotreAvis />} />
-            <Route path="/payment" element={<PaymentPage />} /> {/* Route de la page de paiement */}
-            <Route path="/status" element={<StatusPage />} /> {/* Route de la page de statut */}
-          </Routes>
+            <Route path="/" element={<PageContent />} />
+              {/* Routes des elements de pagecontent start */}
+              <Route path="/form" element={<PageForm />} />
+              <Route path="/formv" element={<PageFormV/>} />
+              <Route path="/display" element={<PageDisplay/>} />
+              <Route path="/confirmed" element={<SoumissionFaites/>} />
+              {/* Routes des elements de pagecontent start */}
+              <Route path="/apropos" element={<PageApropos />} />
+              <Route path="/carriere" element={<PageCarriere />} />
+              <Route path="/don" element={<PageDon />} />
+              <Route path="/histoires" element={<PageHistoires />} />
+              <Route path="/votreavis" element={<PageVotreAvis />} />
+              <Route path="/payment" element={<PaymentPage />} /> {/* Route de la page de paiement */}
+              <Route path="/status" element={<StatusPage />} /> {/* Route de la page de statut */}
+            </Routes>
           <PageFooter />
         </div>
       </Router>
     );
   }
 }
-
 export default App;

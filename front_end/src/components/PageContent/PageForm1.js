@@ -1,7 +1,7 @@
 import React from 'react';
 import './CSSPageForm.css';
 
-function PageForm({ onSubmit }) {
+function PageForm({onSubmit}) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const formData = {
@@ -14,8 +14,11 @@ function PageForm({ onSubmit }) {
           movingDate: e.target.movingDate.value,
           movingTime: e.target.movingTime.value,
         };
+
         if (onSubmit) {
-          onSubmit(formData);
+            onSubmit(formData);
+        }else {
+            console.log("elese")
         }
       };
     
@@ -119,6 +122,5 @@ function PageForm({ onSubmit }) {
 </main>
   );
 }
-
 
 export default PageForm;

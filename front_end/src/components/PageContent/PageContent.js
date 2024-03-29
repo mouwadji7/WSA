@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import PageForm from "./PageForm1";
 import PageFormV from "./PageForm2";
 import PageDisplay from "./PageDisplay";
 import SoumissionFaites from "./SoumissionFaites";
 import Principale_Page from "./Principale_Page";
+import PageForm from "./PageForm1";
 
 const steps = {
   PRINCIPALE: "Principale",
@@ -19,6 +19,7 @@ function PageContent() {
   const [formDataV, setFormDataV] = useState(null);
 
   const handleFormSubmit = (formData) => {
+    console.log(formData)
     const now = Date.now();
     const threeFirstLettersOfLastName = formData.lastName.substr(0, 3);
     const newSubmissionReference = `${threeFirstLettersOfLastName}-${now}`;
@@ -26,7 +27,6 @@ function PageContent() {
       ...formData,
       submissionReference: newSubmissionReference,
     };
-  
     setFormData(submissionData);
     setCurrentPage(steps.PAGE_FORM_V);
   };
@@ -61,9 +61,9 @@ function PageContent() {
     );
   };
 
-  const generateUniqueReference = () => {
+  /*const generateUniqueReference = () => {
     return Math.random().toString(36).substr(2, 9);
-  };
+  };*/
 
   const handleReturnToHome = () => {
     setCurrentPage(steps.PRINCIPALE);
@@ -77,7 +77,9 @@ function PageContent() {
         <Principale_Page onNavigateToForm={handleNavigateToForm} />
       )}
       {currentPage === steps.PAGE_FORM && (
-        <PageForm onSubmit={handleFormSubmit} />
+        <PageForm
+          onSubmit={handleFormSubmit}
+        />
       )}
       {currentPage === steps.PAGE_FORM_V && (
         <PageFormV onSubmit={handleFormSubmitV} />
