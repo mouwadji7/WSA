@@ -27,6 +27,6 @@ public class Soumission {
     private String heureDemenagement;
     private String typeHabitation;
     private String emplacementHabitation;
-    private int chambresACharger;
+    private String chambresACharger;
     private boolean gerer;
 }
