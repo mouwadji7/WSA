@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axiosConfig from "../../../../axiosConfig";
 
-const SoumissionDoneDisplay = ({ soumissionId }) => {
+const SoumissionDoneDisplay = ({ gestionSoumission }) => {
   const [soumission, setSoumission] = useState(null);
   const [tache, setTache] = useState(null);
   const [vehicules, setVehicules] = useState([]);
@@ -14,20 +14,21 @@ const SoumissionDoneDisplay = ({ soumissionId }) => {
         setSoumission(response.data);
         // Récupérer la tâche associée à la soumission
         const tacheId = response.data.tacheId;
-        fetchTache(tacheId);
+        fetchTache(gestionSoumission.tacheId);
       } catch (error) {
         console.error("Error fetching soumission:", error);
       }
     };
 
-    if (soumissionId) {
-      fetchSoumission(soumissionId);
+
+    if (gestionSoumission) {
+      fetchSoumission(gestionSoumission.soumissionId);
     }
-  }, [soumissionId]); // Ajout de soumissionId comme dépendance
+  }, [gestionSoumission]); // Ajout de soumissionId comme dépendance
 
   const fetchTache = async (id) => {
     try {
-      const response = await axiosConfig.get(`/gestionSoumissions/${id}`);
+      const response = await axiosConfig.get(`/taches/${id}`);
       setTache(response.data);
       // Récupérer les détails des véhicules assignés à la tâche
       const vehiculesIds = response.data.vehiculesAssignes;

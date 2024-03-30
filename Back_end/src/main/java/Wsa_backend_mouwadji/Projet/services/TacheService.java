@@ -37,6 +37,11 @@ public class TacheService implements IATacheService {
     }
 
     @Override
+    public List<Tache> getAllTache() {
+        return tacheRepository.findAll();
+    }
+
+    @Override
     public List<String> getEmployesAssignes(String id) {
         Tache tache = tacheRepository.findById(id).orElse(null);
         if (tache != null) {

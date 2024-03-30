@@ -1,5 +1,6 @@
 package Wsa_backend_mouwadji.Projet.controllers;
 
+import java.rmi.server.UID;
 import java.util.List;
 import java.util.Map;
 
@@ -78,6 +79,7 @@ public ResponseEntity<GestionSoumission> createGestionSoumission(@RequestBody Ma
         GestionSoumission gestionSoumission = new GestionSoumission();
         gestionSoumission.setSoumissionId((String) requestData.get("soumissionId"));
         gestionSoumission.setTacheId(tache.getId());
+        gestionSoumission.setId( new UID().toString() );
         gestionSoumission = gestionSoumissionService.createGestionSoumission(gestionSoumission);
 
         return new ResponseEntity<>(gestionSoumission, HttpStatus.CREATED);

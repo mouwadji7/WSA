@@ -11,7 +11,7 @@ function PageSoumissionAM() {
 
   return (
     <main className="container-fluid mt-5 pt-5">
-      <h1> Page Gestion Véhicules </h1>
+      <h1> Page Gestion Soumission </h1>
 
       <div className="row">
         <div className="col-sm-6 bg-primary text-white">

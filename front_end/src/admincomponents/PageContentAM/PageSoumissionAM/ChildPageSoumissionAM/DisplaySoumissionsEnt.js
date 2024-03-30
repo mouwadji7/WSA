@@ -38,6 +38,8 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
     try {
       const response = await axiosConfig.get("/vehicules/all");
       setVehicules(response.data);
+      setSelectedPage("ajouterVehicule")
+
     } catch (error) {
       console.error("Error fetching vehicles:", error);
     }
@@ -53,10 +55,19 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
   };
 
   const handleAddToTache = async () => {
+
+    const generateTache = (tacheDetails) => {
+      return {
+        ...tacheDetails,
+        employesAssignes: tacheDetails.employesAssignes.map(em => em.id),
+        vehiculesAssignes: tacheDetails.vehiculesAssignes.map(vh => vh.id),
+      }
+    }
+
     try {
       const response = await axiosConfig.post("/gestionSoumissions/create", {
         soumissionId: soumission.id,
-        tache: tacheDetails,
+        tache: generateTache(tacheDetails),
       });
       console.log("Gestion soumission created:", response.data);
     } catch (error) {
@@ -76,14 +87,52 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
         {/* Affichage des détails de la soumission */}
         <div className="col-sm-4 bg-primary text-white">
           {/* Code pour afficher les détails de la soumission */}
+
+          <table title={"Voitures"}>
+
+            <thead>
+            <tr>
+              <th>Voitures</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {
+              tacheDetails.vehiculesAssignes.map( (voiture, id) => <tr key={id} ><td>{voiture.nom}</td></tr> )
+            }
+            </tbody>
+
+          </table>
+
+          <table title={"Employés"}>
+            <thead>
+              <tr>
+                <th>Employés</th>
+              </tr>
+            </thead>
+
+            <tbody>
+            {
+              tacheDetails.employesAssignes.map( (employe, id) => <tr key={id}><td>{employe.nom} {employe.prenom}</td></tr> )
+            }
+            </tbody>
+
+          </table>
+
         </div>
         {/* Colonne pour ajouter un véhicule ou un employé */}
         <div className="col-sm-4 bg-dark text-white">
           <h2>Ajouter</h2>
-          <button onClick={() => handlePageChange("ajouterVehicule")}>
+          <button onClick={() => {
+            handleAddVehicule();
+            handlePageChange("ajouterVehicule")
+          }}>
             Ajouter un véhicule
           </button>
-          <button onClick={() => handlePageChange("ajouterEmploye")}>
+          <button onClick={() => {
+            handleAddEmploye()
+            handlePageChange("ajouterEmploye")
+          }}>
             Ajouter un employé
           </button>
           <button onClick={() => handlePageChange("ajouterTache")}>
@@ -99,7 +148,10 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
                 <div key={vehicule.id}>
                   <p>{vehicule.nom}</p>
                   <button
-                    onClick={() => console.log("Ajouter à tâche:", vehicule.id)}
+                    onClick={() => setTacheDetails(v => ({
+                      ...v,
+                      vehiculesAssignes: [...v.vehiculesAssignes.filter(data => data.id != vehicule.id), vehicule]
+                    }))}
                   >
                     Ajouter
                   </button>
@@ -111,9 +163,12 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
             <div>
               {employes.map((employe) => (
                 <div key={employe.id}>
-                  <p>{employe.nom}</p>
+                  <p>{employe.nom} {employe.prenom}</p>
                   <button
-                    onClick={() => console.log("Ajouter à tâche:", employe.id)}
+                      onClick={() => setTacheDetails(v => ({
+                        ...v,
+                        employesAssignes: [...v.employesAssignes.filter(emp => emp.id != employe.id), employe]
+                      }))}
                   >
                     Ajouter
                   </button>

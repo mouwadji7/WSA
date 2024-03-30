@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import Wsa_backend_mouwadji.Projet.models.Tache;
 import Wsa_backend_mouwadji.Projet.services.IAservice.IATacheService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api")
 public class TacheController {
@@ -42,6 +44,16 @@ public class TacheController {
         Tache tache = tacheService.getTacheById(id);
         if (tache != null) {
             return new ResponseEntity<>(tache, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/taches")
+    public ResponseEntity<List<Tache>> getAllTache() {
+        List<Tache> taches = tacheService.getAllTache();
+        if (taches != null) {
+            return new ResponseEntity<>(taches, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

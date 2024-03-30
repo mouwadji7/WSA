@@ -9,7 +9,7 @@ function EMDisplay() {
     const fetchEmployees = async () => {
       try {
         const response = await axiosConfig.get("/employes");
-        setEmployees(response.data);
+        setEmployees(v => [...response.data]);
       } catch (error) {
         console.error("Erreur lors de la récupération des employés:", error);
       }
@@ -17,6 +17,8 @@ function EMDisplay() {
 
     fetchEmployees();
   }, []);
+
+  console.log(employees)
 
   return (
     <div className="col-sm-6 bg-dark text-white">
@@ -38,7 +40,7 @@ function EMDisplay() {
                     <div>Email: {employee.email}</div>
                     <div>Téléphone: {employee.telephone}</div>
                     <div>
-                      Tâches assignées: {employee.tachesAssignes.join(", ")}
+                      Tâches assignées: {employee.tachesAssignes?.join(", ")}
                     </div>
                   </Tooltip>
                 }
