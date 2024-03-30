@@ -78,6 +78,10 @@ public void deleteGestionSoumission(String id) {
         soumissionService.deleteSoumission(gestionSoumission.getSoumissionId());
     }
 }
+    @Override
+public GestionSoumission getGestionSoumissionBySoumissionId(String soumissionId) {
+    return gestionSoumissionRepository.findBySoumissionId(soumissionId);
+}
 
     @Override
     public GestionSoumission updateGestionSoumission(String id, GestionSoumission gestionSoumission) {

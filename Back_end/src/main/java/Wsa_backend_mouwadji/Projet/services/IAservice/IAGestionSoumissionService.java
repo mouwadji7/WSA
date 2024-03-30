@@ -15,4 +15,5 @@ public interface IAGestionSoumissionService {
     void updateSoumission(String id, Soumission soumission);
     GestionSoumission getGestionSoumissionById(String id);
     List<GestionSoumission> getGestionSoumissionAll();
+    GestionSoumission getGestionSoumissionBySoumissionId(String soumissionId);
 }

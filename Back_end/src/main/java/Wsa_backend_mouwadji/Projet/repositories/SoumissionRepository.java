@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface SoumissionRepository extends MongoRepository<Soumission,String>{
     List<Soumission> findByGerer(boolean gerer);
+    Soumission findByReferenceNumber(String referenceNumber);
 }
