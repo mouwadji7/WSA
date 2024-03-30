@@ -1,11 +1,9 @@
 import React from "react";
+import { FaRegNewspaper, FaTasks, FaChartBar } from "react-icons/fa";
 
 function PrincipalePage({ onNavigateToForm }) {
   const handleSubmit = (event) => {
     event.preventDefault();
-    // This function prevents the default form submission behavior
-    // and invokes the onNavigateToForm function passed as a prop
-    // which triggers navigation to the form page.
     onNavigateToForm();
   };
 
@@ -26,6 +24,11 @@ function PrincipalePage({ onNavigateToForm }) {
         </p>
 
         <div className="call-to-action text-center m-5">
+          <img
+            src="/image/accord.png"
+            className="submit-icon"
+            alt="Soumission"
+          />
           <button type="button" className="btn btn-dark" onClick={handleSubmit}>
             Faire une soumission
           </button>
@@ -40,7 +43,10 @@ function PrincipalePage({ onNavigateToForm }) {
                   className="rounded-circle"
                   alt="Professionnalisme et Expérience"
                 />
-                <p>Professionnalisme et Expérience</p>
+                <p>
+                  Professionnalisme et Expérience - Notre équipe possède une
+                  vaste expérience dans l'industrie du déménagement.
+                </p>
               </div>
               <div className="col text-center">
                 <img
@@ -48,7 +54,11 @@ function PrincipalePage({ onNavigateToForm }) {
                   className="rounded-circle"
                   alt="Personnalisation des Services"
                 />
-                <p>Personnalisation des Services</p>
+                <p>
+                  Personnalisation des Services - Nous nous engageons à fournir
+                  des services personnalisés pour répondre à vos besoins
+                  spécifiques.
+                </p>
               </div>
               <div className="col text-center">
                 <img
@@ -56,7 +66,10 @@ function PrincipalePage({ onNavigateToForm }) {
                   className="rounded-circle"
                   alt="Équipe Qualifiée"
                 />
-                <p>Équipe Qualifiée</p>
+                <p>
+                  Équipe Qualifiée - Notre équipe est composée de professionnels
+                  qualifiés et dévoués.
+                </p>
               </div>
             </div>
             <div className="row feature">
@@ -66,7 +79,11 @@ function PrincipalePage({ onNavigateToForm }) {
                   className="rounded-circle"
                   alt="Équipement de Pointe"
                 />
-                <p>Équipement de Pointe</p>
+                <p>
+                  Équipement de Pointe - Nous utilisons des équipements modernes
+                  et de pointe pour garantir un déménagement efficace et
+                  sécurisé.
+                </p>
               </div>
               <div className="col text-center">
                 <img
@@ -74,7 +91,10 @@ function PrincipalePage({ onNavigateToForm }) {
                   className="rounded-circle"
                   alt="Transparence des Coûts"
                 />
-                <p>Transparence des Coûts</p>
+                <p>
+                  Transparence des Coûts - Nous croyons en une transparence
+                  totale en ce qui concerne nos tarifs et nos services.
+                </p>
               </div>
               <div className="col text-center">
                 <img
@@ -82,7 +102,10 @@ function PrincipalePage({ onNavigateToForm }) {
                   className="rounded-circle"
                   alt="Assurance"
                 />
-                <p>Assurance</p>
+                <p>
+                  Assurance - Votre satisfaction et la sécurité de vos biens
+                  sont notre priorité absolue.
+                </p>
               </div>
             </div>
           </div>
@@ -95,10 +118,28 @@ function PrincipalePage({ onNavigateToForm }) {
             de nos services exceptionnels. Nous sommes là pour rendre votre
             déménagement aussi facile que possible !
           </p>
-
+          <img
+            src="/image/accord.png"
+            className="submit-icon"
+            alt="Soumission"
+          />
           <button type="button" className="btn btn-dark" onClick={handleSubmit}>
             Faire une soumission
           </button>
+        </div>
+      </div>
+
+      <div className="row mt-5">
+        <div className="col text-center">
+          <div className="fireworks-animation">
+            <img src="/image/celeb.png" alt="Fireworks Animation" />
+          </div>
+          <h2 className="mt-3">Célébrons notre succès ensemble</h2>
+          <p className="lead">
+            Notre entreprise a été classée parmi les meilleures dans l'industrie
+            du déménagement. Merci à toute notre équipe dévouée et à nos clients
+            fidèles pour leur soutien continu.
+          </p>
         </div>
       </div>
     </main>
