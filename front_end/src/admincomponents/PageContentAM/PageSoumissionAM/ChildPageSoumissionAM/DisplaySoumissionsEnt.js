@@ -38,8 +38,7 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
     try {
       const response = await axiosConfig.get("/vehicules/all");
       setVehicules(response.data);
-      setSelectedPage("ajouterVehicule")
-
+      setSelectedPage("ajouterVehicule");
     } catch (error) {
       console.error("Error fetching vehicles:", error);
     }
@@ -55,14 +54,13 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
   };
 
   const handleAddToTache = async () => {
-
     const generateTache = (tacheDetails) => {
       return {
         ...tacheDetails,
-        employesAssignes: tacheDetails.employesAssignes.map(em => em.id),
-        vehiculesAssignes: tacheDetails.vehiculesAssignes.map(vh => vh.id),
-      }
-    }
+        employesAssignes: tacheDetails.employesAssignes.map((em) => em.id),
+        vehiculesAssignes: tacheDetails.vehiculesAssignes.map((vh) => vh.id),
+      };
+    };
 
     try {
       const response = await axiosConfig.post("/gestionSoumissions/create", {
@@ -82,76 +80,94 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
 
   return (
     <div className="container-fluid mt-5 pt-5">
-      <h1>Page Gestion des soumissions</h1>
-      <div className="row">
+      <h1 className="text-center mb-4">Page Gestion des soumissions</h1>
+      <div className="row justify-content-center">
         {/* Affichage des détails de la soumission */}
         <div className="col-sm-4 bg-primary text-white">
           {/* Code pour afficher les détails de la soumission */}
-
-          <table title={"Voitures"}>
-
+          <h2>Détails de la soumission</h2>
+          <table title={"Voitures"} className="table table-striped">
             <thead>
-            <tr>
-              <th>Voitures</th>
-            </tr>
+              <tr>
+                <th>Voitures</th>
+              </tr>
             </thead>
-
             <tbody>
-            {
-              tacheDetails.vehiculesAssignes.map( (voiture, id) => <tr key={id} ><td>{voiture.nom}</td></tr> )
-            }
+              {tacheDetails.vehiculesAssignes.map((voiture, id) => (
+                <tr key={id}>
+                  <td>{voiture.nom}</td>
+                </tr>
+              ))}
             </tbody>
-
           </table>
-
-          <table title={"Employés"}>
+          <table title={"Employés"} className="table table-striped">
             <thead>
               <tr>
                 <th>Employés</th>
               </tr>
             </thead>
-
             <tbody>
-            {
-              tacheDetails.employesAssignes.map( (employe, id) => <tr key={id}><td>{employe.nom} {employe.prenom}</td></tr> )
-            }
+              {tacheDetails.employesAssignes.map((employe, id) => (
+                <tr key={id}>
+                  <td>
+                    {employe.nom} {employe.prenom}
+                  </td>
+                </tr>
+              ))}
             </tbody>
-
           </table>
-
         </div>
         {/* Colonne pour ajouter un véhicule ou un employé */}
         <div className="col-sm-4 bg-dark text-white">
-          <h2>Ajouter</h2>
-          <button onClick={() => {
-            handleAddVehicule();
-            handlePageChange("ajouterVehicule")
-          }}>
-            Ajouter un véhicule
-          </button>
-          <button onClick={() => {
-            handleAddEmploye()
-            handlePageChange("ajouterEmploye")
-          }}>
-            Ajouter un employé
-          </button>
-          <button onClick={() => handlePageChange("ajouterTache")}>
-            Ajouter une tâche
-          </button>
+          <h2 className="text-center">Ajouter</h2>
+          <div className="d-grid gap-2">
+            <button
+              className="btn btn-primary mb-3"
+              onClick={() => {
+                handleAddVehicule();
+                handlePageChange("ajouterVehicule");
+              }}
+            >
+              Ajouter un véhicule
+            </button>
+            <button
+              className="btn btn-primary mb-3"
+              onClick={() => {
+                handleAddEmploye();
+                handlePageChange("ajouterEmploye");
+              }}
+            >
+              Ajouter un employé
+            </button>
+            <button
+              className="btn btn-primary mb-3"
+              onClick={() => handlePageChange("ajouterTache")}
+            >
+              Ajouter une tâche
+            </button>
+          </div>
         </div>
         {/* Colonne pour afficher le contenu sélectionné */}
         <div className="col-sm-4 bg-primary text-white">
-          <h2>Contenu sélectionné</h2>
+          <h2 className="text-center">Contenu sélectionné</h2>
           {selectedPage === "ajouterVehicule" && (
             <div>
               {vehicules.map((vehicule) => (
                 <div key={vehicule.id}>
                   <p>{vehicule.nom}</p>
                   <button
-                    onClick={() => setTacheDetails(v => ({
-                      ...v,
-                      vehiculesAssignes: [...v.vehiculesAssignes.filter(data => data.id != vehicule.id), vehicule]
-                    }))}
+                    className="btn btn-success"
+                    onClick={() =>
+                      setTacheDetails((prevState) => ({
+                        ...prevState,
+                        vehiculesAssignes: [
+                          ...prevState.vehiculesAssignes.filter(
+                            (data) => data.id !== vehicule.id,
+                          ),
+                          vehicule,
+                        ],
+                      }))
+                    }
                   >
                     Ajouter
                   </button>
@@ -163,12 +179,22 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
             <div>
               {employes.map((employe) => (
                 <div key={employe.id}>
-                  <p>{employe.nom} {employe.prenom}</p>
+                  <p>
+                    {employe.nom} {employe.prenom}
+                  </p>
                   <button
-                      onClick={() => setTacheDetails(v => ({
-                        ...v,
-                        employesAssignes: [...v.employesAssignes.filter(emp => emp.id != employe.id), employe]
-                      }))}
+                    className="btn btn-success"
+                    onClick={() =>
+                      setTacheDetails((prevState) => ({
+                        ...prevState,
+                        employesAssignes: [
+                          ...prevState.employesAssignes.filter(
+                            (emp) => emp.id !== employe.id,
+                          ),
+                          employe,
+                        ],
+                      }))
+                    }
                   >
                     Ajouter
                   </button>
@@ -204,7 +230,12 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
                 value={tacheDetails.dateFin}
                 onChange={handleInputChange}
               />
-              <button onClick={handleAddToTache}>Ajouter Tâche</button>
+              <button
+                className="btn btn-success mt-3"
+                onClick={handleAddToTache}
+              >
+                Ajouter Tâche
+              </button>
             </div>
           )}
         </div>

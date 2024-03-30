@@ -11,27 +11,27 @@ function PageSoumissionAM() {
 
   return (
     <main className="container-fluid mt-5 pt-5">
-      <h1> Page Gestion Soumission </h1>
+      <h1 className="text-center">Page Gestion Soumission</h1>
 
-      <div className="row">
+      <div className="row justify-content-center text-center">
         <div className="col-sm-6 bg-primary text-white">
           <div className="container pt-5">
-            <h1 className="text-dark">Cote Management </h1>
+            <h1 className="text-center text-dark">Cote Management</h1>
 
             <div className="btn-group-vertical mt-5">
               <button
                 type="button"
-                className="btn btn-dark mb-4"
+                className="btn btn-dark mb-3"
                 onClick={() => handleClick(<SoumissionSent />)}
               >
-                Soumission recu
+                Soumission reçue
               </button>
               <button
                 type="button"
-                className="btn btn-dark mb-4"
+                className="btn btn-dark mb-3"
                 onClick={() => handleClick(<SoumissionDone />)}
               >
-                Soumission traites
+                Soumission traitée
               </button>
             </div>
           </div>
@@ -39,14 +39,15 @@ function PageSoumissionAM() {
 
         {currentDisplay}
       </div>
-      <div className="container mt-5 pt-5">
-        <div className="row">
-          <div className="col">
+
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-auto">
             <button type="button" className="btn btn-primary mb-2">
-              Revenir a l'acceui adminHome
+              Revenir à l'accueil adminHome
             </button>
           </div>
-          <div className="col">
+          <div className="col-auto">
             <button type="button" className="btn btn-dark mb-2">
               Tout effacer
             </button>

@@ -20,7 +20,6 @@ const SoumissionDoneDisplay = ({ gestionSoumission }) => {
       }
     };
 
-
     if (gestionSoumission) {
       fetchSoumission(gestionSoumission.soumissionId);
     }
@@ -64,15 +63,15 @@ const SoumissionDoneDisplay = ({ gestionSoumission }) => {
   };
 
   return (
-    <div>
-      <h2>Détails de la Soumission</h2>
+    <div className="container mt-5">
+      <h2 className="text-center">Détails de la Soumission</h2>
       {soumission && (
         <div>
           <p>Référence : {soumission.referenceNumber}</p>
           {/* Afficher d'autres détails de la soumission */}
         </div>
       )}
-      <h2>Détails de la Tâche</h2>
+      <h2 className="text-center">Détails de la Tâche</h2>
       {tache && (
         <div>
           <p>Nom de la tâche : {tache.nom}</p>
@@ -81,21 +80,25 @@ const SoumissionDoneDisplay = ({ gestionSoumission }) => {
           <p>Date de fin : {tache.dateFin}</p>
         </div>
       )}
-      <h2>Véhicules Assignés</h2>
-      {vehicules.map((vehicule) => (
-        <div key={vehicule.id}>
-          <p>Nom : {vehicule.nom}</p>
-          <p>Type : {vehicule.type}</p>
-        </div>
-      ))}
-      <h2>Employés Assignés</h2>
-      {employes.map((employe) => (
-        <div key={employe.id}>
-          <p>Nom : {employe.nom}</p>
-          <p>Prénom : {employe.prenom}</p>
-          {/* Afficher d'autres détails de l'employé si nécessaire */}
-        </div>
-      ))}
+      <h2 className="text-center">Véhicules Assignés</h2>
+      <div className="row justify-content-center">
+        {vehicules.map((vehicule) => (
+          <div key={vehicule.id} className="col-sm-4">
+            <p>Nom : {vehicule.nom}</p>
+            <p>Type : {vehicule.type}</p>
+          </div>
+        ))}
+      </div>
+      <h2 className="text-center">Employés Assignés</h2>
+      <div className="row justify-content-center">
+        {employes.map((employe) => (
+          <div key={employe.id} className="col-sm-4">
+            <p>Nom : {employe.nom}</p>
+            <p>Prénom : {employe.prenom}</p>
+            {/* Afficher d'autres détails de l'employé si nécessaire */}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

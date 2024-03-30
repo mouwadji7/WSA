@@ -37,7 +37,7 @@ function PageDisplay({ formData, formDataV, onConfirm, onCancel, onModify }) {
   };
 
   return (
-    <main className="container mt-5 pt-5">
+    <main className="container mt-5 pt-5 text-center">
       <h2 className="mb-4">Révision des informations</h2>
 
       <div className="border-bottom pb-3 mb-4">
@@ -82,7 +82,7 @@ function PageDisplay({ formData, formDataV, onConfirm, onCancel, onModify }) {
         </p>
       </div>
 
-      <div className="mt-4">
+      <div className="mt-4 d-flex justify-content-center">
         <button
           className="btn btn-primary me-3"
           onClick={sendSubmissionToDatabase}

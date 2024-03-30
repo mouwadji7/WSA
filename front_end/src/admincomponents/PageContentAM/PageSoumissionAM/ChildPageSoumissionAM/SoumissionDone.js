@@ -16,47 +16,49 @@ const SoumissionDone = () => {
   const fetchGestionSoumissions = async () => {
     try {
       const response = await axiosConfig.get("/gestionSoumissions/all");
-      response.data.map( async (s) => {
-          let soumissionRes = await getSoumissionFromBackend(s?.soumissionId)
-          setSoumissions(v => [...v, soumissionRes])
+      const fetchedSoumissions = [];
+      const fetchedTaches = [];
 
-          let tacheRes = await getTacheFromBackend(s?.tacheId)
-          setTaches(v => [...v, tacheRes])
-        }
-      );
+      for (const gestion of response.data) {
+        const soumissionRes = await getSoumissionFromBackend(
+          gestion?.soumissionId,
+        );
+        fetchedSoumissions.push(soumissionRes);
+
+        const tacheRes = await getTacheFromBackend(gestion?.tacheId);
+        fetchedTaches.push(tacheRes);
+      }
+
+      setSoumissions(fetchedSoumissions);
+      setTaches(fetchedTaches);
       setGestionSoumissions(response.data);
     } catch (error) {
       console.error("Error fetching gestion soumissions:", error);
     }
   };
 
-
   const getSoumissionFromBackend = async (id) => {
     try {
-      const response = await axiosConfig.get("/soumissions/"+id);
-      return await response.data;
+      const response = await axiosConfig.get("/soumissions/" + id);
+      return response.data;
     } catch (error) {
       console.error("Error fetching gestion soumissions:", error);
     }
-  }
+  };
 
   const getTacheFromBackend = async (id) => {
     try {
-      const response = await axiosConfig.get("/taches/"+id);
-      return await response.data;
+      const response = await axiosConfig.get("/taches/" + id);
+      return response.data;
     } catch (error) {
       console.error("Error fetching gestion soumissions:", error);
     }
-  }
+  };
 
   const getSoumission = (id) => {
-    const res = soumissions.filter(s => s?.id == id );
-    if ( res.length == 0 ) {
-      return {}
-    }else {
-      return res[0];
-    }
-  }
+    const res = soumissions.find((s) => s?.id === id) || {};
+    return res;
+  };
 
   const handleGestionSoumissionClick = (gestionSoumission) => {
     setSelectedGestionSoumission(gestionSoumission);
@@ -69,15 +71,21 @@ const SoumissionDone = () => {
   return (
     <div className="col-sm-6 bg-dark text-white">
       <div className="container pt-5">
-        <h2>Liste des Gestion Soumissions</h2>
+        <h2 className="text-center">Liste des Gestion Soumissions</h2>
         <ul>
           {gestionSoumissions?.map((gestionSoumission) => (
             <li
               key={gestionSoumission.id}
               onClick={() => handleGestionSoumissionClick(gestionSoumission)}
             >
-              <p>Client: {getSoumission(gestionSoumission.soumissionId)?.nom} { getSoumission(gestionSoumission.soumissionId)?.prenom}</p>
-              <p>Soumission ID: {gestionSoumission.id} - {gestionSoumission?.tache?.nom}</p>
+              <p>
+                Client: {getSoumission(gestionSoumission.soumissionId)?.nom}{" "}
+                {getSoumission(gestionSoumission.soumissionId)?.prenom}
+              </p>
+              <p>
+                Soumission ID: {gestionSoumission.id} -{" "}
+                {gestionSoumission?.tache?.nom}
+              </p>
             </li>
           ))}
         </ul>
@@ -87,9 +95,11 @@ const SoumissionDone = () => {
       )}
       {/* Bouton Cancel */}
       {selectedGestionSoumission && (
-        <button className="btn btn-danger mt-3" onClick={handleCancelClick}>
-          Cancel
-        </button>
+        <div className="container text-center mt-3">
+          <button className="btn btn-danger" onClick={handleCancelClick}>
+            Cancel
+          </button>
+        </div>
       )}
     </div>
   );

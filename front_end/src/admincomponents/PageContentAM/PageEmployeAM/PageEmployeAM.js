@@ -12,11 +12,13 @@ function PageEmployeAM() {
 
   return (
     <main className="container-fluid mt-5 pt-5">
-      <h1> Page Gestion employes </h1>
+      <h1 className="text-center"> Page Gestion employes </h1>
 
-      <div className="row">
-        <div className="col-sm-6 bg-primary text-white">
-          <div className="container  pt-5">
+      <div className="row justify-content-center ">
+        <div className="col-sm-6 bg-primary text-white text-center">
+          {" "}
+          {/* Ajout de la classe text-center */}
+          <div className="container pt-5">
             <h1 className="text-dark">Cote Managment </h1>
 
             <div className="btn-group-vertical mt-5">
@@ -50,17 +52,19 @@ function PageEmployeAM() {
             </div>
           </div>
         </div>
-        {currentDisplay} {/* Afficher le composant actuel */}
+        <div className="col-sm-6 ">
+          {currentDisplay} {/* Afficher le composant actuel */}
+        </div>
       </div>
       <div className="container mt-5 pt-5">
-        <div className="row">
-          <div className="col">
-            <button type="button" className="btn btn-primary mb-2">
+        <div className="row justify-content-between">
+          <div className="col-sm-4">
+            <button type="button" className="btn btn-primary mb-2 w-100">
               Revenir a l'acceui adminHome
             </button>
           </div>
-          <div className="col">
-            <button type="button" className="btn btn-dark mb-2">
+          <div className="col-sm-4">
+            <button type="button" className="btn btn-dark mb-2 w-100">
               Tout effacer
             </button>
           </div>

@@ -1,4 +1,3 @@
-// Importez le composant useState pour gérer l'état des actions
 import React, { useState, useEffect } from "react";
 import axiosConfig from "../../../../axiosConfig";
 
@@ -32,19 +31,18 @@ function EmRecherche() {
     try {
       const response = await axiosConfig.get("/employes");
       const filteredResults = await response.data.filter(
-          (employee) =>
-              employee.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              employee.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-              employee.tachesAssignes.includes(searchTerm),
+        (employee) =>
+          employee.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          employee.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          employee.tachesAssignes.includes(searchTerm),
       );
       // Mettre à jour les résultats de la recherche
       setSearchResults(filteredResults);
     } catch (error) {
       console.error("Erreur lors de la récupération des employés:", error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-
   };
 
   const handleTaskDetails = async (taskId) => {
@@ -73,10 +71,13 @@ function EmRecherche() {
   };
 
   return (
-    <div className="col-sm-6 bg-dark text-white">
+    <div className="bg-dark text-white">
       <div className="container pt-5">
-        <h1 className="text-white mb-4">Recherche d'employés</h1>
-        <form onSubmit={handleSubmit}>
+        <h1 className="text-center text-white mb-4">Recherche d'employés</h1>
+        <form
+          onSubmit={handleSubmit}
+          className="d-flex flex-column align-items-center"
+        >
           <input
             type="text"
             value={searchTerm}
@@ -92,13 +93,13 @@ function EmRecherche() {
           {searchResults?.map((employee) => (
             <li
               key={employee.id}
-              className="list-group-item bg-dark text-white mb-2"
+              className="list-group-item bg-dark text-white mb-2 d-flex justify-content-between align-items-center"
               onClick={() => handleTaskDetails(employee.id)}
             >
               <Employe
-                  employee={employee}
-                  fetchEmployees={fetchEmployees}
-                  setLoading={setLoading}
+                employee={employee}
+                fetchEmployees={fetchEmployees}
+                setLoading={setLoading}
               />
               <div>
                 Tâches assignées: {employee?.tachesAssignes?.length}
@@ -139,10 +140,7 @@ function EmRecherche() {
   );
 }
 
-
-
-function Employe({employee, fetchEmployees, setLoading}) {
-
+function Employe({ employee, fetchEmployees, setLoading }) {
   const [employe, setEmploye] = useState(employee);
 
   const deleteEmployee = async (employeeId) => {
@@ -168,52 +166,75 @@ function Employe({employee, fetchEmployees, setLoading}) {
     } finally {
       setLoading(false);
     }
-
   };
 
   const inputLabelStyles = {
     width: "100px",
-  }
+  };
 
   const inputStyles = {
     height: "10px",
     width: "200px",
     border: "none",
-    borderRadius: "0px"
-  }
+    borderRadius: "0px",
+  };
 
   const inputContainerStyles = {
     display: "flex",
-  }
+  };
 
-  return <>
-    <div style={inputContainerStyles} >
-      <span style={inputLabelStyles} >Nom:</span>
-      <input style={inputStyles} type={"text"} value={employe.nom} onChange={(e) => setEmploye(v=> ({...v, nom: e.target.value}))} /> </div>
-    <div style={inputContainerStyles} >
-      <span style={inputLabelStyles} >Prénom:</span>
-      <input style={inputStyles} type={"text"} value={employe.prenom} onChange={(e) => setEmploye(v=> ({...v, prenom: e.target.value}))} />
-    </div>
-    <div style={inputContainerStyles} >
-      <span style={inputLabelStyles} >Email:</span>
-      <input style={inputStyles} type={"email"} value={employe.email} onChange={(e) => setEmploye(v=> ({...v, email: e.target.value}))} />
-    </div>
-    <div style={inputContainerStyles} >
-      <span style={inputLabelStyles} >Téléphone:</span>
-      <input style={inputStyles} type={"text"} value={employe.telephone} onChange={(e) => setEmploye(v=> ({...v, telephone: e.target.value}))} />
-    </div>
+  return (
+    <>
+      <div style={inputContainerStyles}>
+        <span style={inputLabelStyles}>Nom:</span>
+        <input
+          style={inputStyles}
+          type={"text"}
+          value={employe.nom}
+          onChange={(e) => setEmploye((v) => ({ ...v, nom: e.target.value }))}
+        />{" "}
+      </div>
+      <div style={inputContainerStyles}>
+        <span style={inputLabelStyles}>Prénom:</span>
+        <input
+          style={inputStyles}
+          type={"text"}
+          value={employe.prenom}
+          onChange={(e) =>
+            setEmploye((v) => ({ ...v, prenom: e.target.value }))
+          }
+        />
+      </div>
+      <div style={inputContainerStyles}>
+        <span style={inputLabelStyles}>Email:</span>
+        <input
+          style={inputStyles}
+          type={"email"}
+          value={employe.email}
+          onChange={(e) => setEmploye((v) => ({ ...v, email: e.target.value }))}
+        />
+      </div>
+      <div style={inputContainerStyles}>
+        <span style={inputLabelStyles}>Téléphone:</span>
+        <input
+          style={inputStyles}
+          type={"text"}
+          value={employe.telephone}
+          onChange={(e) =>
+            setEmploye((v) => ({ ...v, telephone: e.target.value }))
+          }
+        />
+      </div>
 
-    <button onClick={() => deleteEmployee(employe.id)}>
-      Supprimer Employé
-    </button>
-    {/* Bouton de suppression d'employé */}
-    <button
-        onClick={() => updateEmployee(employe.id, employe)}>
-      Modifier Employé
-    </button>
-
-  </>
-
+      <button onClick={() => deleteEmployee(employe.id)}>
+        Supprimer Employé
+      </button>
+      {/* Bouton de suppression d'employé */}
+      <button onClick={() => updateEmployee(employe.id, employe)}>
+        Modifier Employé
+      </button>
+    </>
+  );
 }
 
 export default EmRecherche;
