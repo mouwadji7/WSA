@@ -25,17 +25,26 @@ function EmRecherche() {
     setSearchTerm(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     // Effectuer la recherche
-    const filteredResults = searchResults.filter(
-      (employee) =>
-        employee.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        employee.tachesAssignes.includes(searchTerm),
-    );
-    // Mettre à jour les résultats de la recherche
-    setSearchResults(filteredResults);
+    setLoading(true);
+    try {
+      const response = await axiosConfig.get("/employes");
+      const filteredResults = await response.data.filter(
+          (employee) =>
+              employee.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              employee.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+              employee.tachesAssignes.includes(searchTerm),
+      );
+      // Mettre à jour les résultats de la recherche
+      setSearchResults(filteredResults);
+    } catch (error) {
+      console.error("Erreur lors de la récupération des employés:", error);
+    } finally {
+      setLoading(false)
+    }
+
   };
 
   const handleTaskDetails = async (taskId) => {
@@ -63,32 +72,6 @@ function EmRecherche() {
     }
   };
 
-  const deleteEmployee = async (employeeId) => {
-    try {
-      setLoading(true);
-      await axiosConfig.delete(`/employes/${employeeId}`);
-      // Rafraîchir les résultats après la suppression
-      fetchEmployees();
-    } catch (error) {
-      console.error("Erreur lors de la suppression de l'employé:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const updateEmployee = async (employeeId, newData) => {
-    try {
-      setLoading(true);
-      await axiosConfig.put(`/employes/${employeeId}`, newData);
-      // Rafraîchir les résultats après la modification
-      fetchEmployees();
-    } catch (error) {
-      console.error("Erreur lors de la mise à jour de l'employé:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   return (
     <div className="col-sm-6 bg-dark text-white">
       <div className="container pt-5">
@@ -106,19 +89,20 @@ function EmRecherche() {
           </button>
         </form>
         <ul className="list-group">
-          {searchResults.map((employee) => (
+          {searchResults?.map((employee) => (
             <li
               key={employee.id}
               className="list-group-item bg-dark text-white mb-2"
               onClick={() => handleTaskDetails(employee.id)}
             >
-              <div>Nom: {employee.nom}</div>
-              <div>Prénom: {employee.prenom}</div>
-              <div>Email: {employee.email}</div>
-              <div>Téléphone: {employee.telephone}</div>
+              <Employe
+                  employee={employee}
+                  fetchEmployees={fetchEmployees}
+                  setLoading={setLoading}
+              />
               <div>
-                Tâches assignées:{" "}
-                {employee.tachesAssignes.map((taskId) => (
+                Tâches assignées: {employee?.tachesAssignes?.length}
+                {employee?.tachesAssignes?.map((taskId) => (
                   <button
                     key={taskId}
                     onClick={() => handleTaskDetails(taskId)}
@@ -146,19 +130,6 @@ function EmRecherche() {
                   </div>
                 </div>
               )}
-              <button onClick={() => deleteEmployee(employee.id)}>
-                Supprimer Employé
-              </button>
-              {/* Bouton de suppression d'employé */}
-              <button
-                onClick={() =>
-                  updateEmployee(employee.id, {
-                    /* Nouvelles données d'employé */
-                  })
-                }
-              >
-                Modifier Employé
-              </button>
               {/* Bouton de modification d'employé */}
             </li>
           ))}
@@ -166,6 +137,83 @@ function EmRecherche() {
       </div>
     </div>
   );
+}
+
+
+
+function Employe({employee, fetchEmployees, setLoading}) {
+
+  const [employe, setEmploye] = useState(employee);
+
+  const deleteEmployee = async (employeeId) => {
+    try {
+      setLoading(true);
+      await axiosConfig.delete(`/employes/${employeeId}`);
+      // Rafraîchir les résultats après la suppression
+      fetchEmployees();
+    } catch (error) {
+      console.error("Erreur lors de la suppression de l'employé:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const updateEmployee = async (employeeId, newData) => {
+    try {
+      setLoading(true);
+      await axiosConfig.put(`/employes/${employeeId}`, newData);
+      fetchEmployees();
+    } catch (error) {
+      console.error("Erreur lors de la mise à jour de l'employé:", error);
+    } finally {
+      setLoading(false);
+    }
+
+  };
+
+  const inputLabelStyles = {
+    width: "100px",
+  }
+
+  const inputStyles = {
+    height: "10px",
+    width: "200px",
+    border: "none",
+    borderRadius: "0px"
+  }
+
+  const inputContainerStyles = {
+    display: "flex",
+  }
+
+  return <>
+    <div style={inputContainerStyles} >
+      <span style={inputLabelStyles} >Nom:</span>
+      <input style={inputStyles} type={"text"} value={employe.nom} onChange={(e) => setEmploye(v=> ({...v, nom: e.target.value}))} /> </div>
+    <div style={inputContainerStyles} >
+      <span style={inputLabelStyles} >Prénom:</span>
+      <input style={inputStyles} type={"text"} value={employe.prenom} onChange={(e) => setEmploye(v=> ({...v, prenom: e.target.value}))} />
+    </div>
+    <div style={inputContainerStyles} >
+      <span style={inputLabelStyles} >Email:</span>
+      <input style={inputStyles} type={"email"} value={employe.email} onChange={(e) => setEmploye(v=> ({...v, email: e.target.value}))} />
+    </div>
+    <div style={inputContainerStyles} >
+      <span style={inputLabelStyles} >Téléphone:</span>
+      <input style={inputStyles} type={"text"} value={employe.telephone} onChange={(e) => setEmploye(v=> ({...v, telephone: e.target.value}))} />
+    </div>
+
+    <button onClick={() => deleteEmployee(employe.id)}>
+      Supprimer Employé
+    </button>
+    {/* Bouton de suppression d'employé */}
+    <button
+        onClick={() => updateEmployee(employe.id, employe)}>
+      Modifier Employé
+    </button>
+
+  </>
+
 }
 
 export default EmRecherche;

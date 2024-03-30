@@ -39,7 +39,7 @@ public class GestionSoumissionService implements IAGestionSoumissionService {
     
     @Override
     public GestionSoumission createGestionSoumission(GestionSoumission gestionSoumission) {
-        return gestionSoumission;
+        return gestionSoumissionRepository.save(gestionSoumission);
     }
 
     @Override

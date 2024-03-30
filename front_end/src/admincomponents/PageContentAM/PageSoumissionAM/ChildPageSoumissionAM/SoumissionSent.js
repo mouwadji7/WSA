@@ -19,6 +19,14 @@ const SoumissionsEnt = () => {
     }
   };
 
+  const handleGestionSoumissionAdd = async () => {
+    try {
+      const response = await axiosConfig.post("/gestionSoumissions/create");
+      setSoumissions(response.data);
+    } catch (error) {
+      console.error("Error fetching soumissions:", error);
+    }
+  };
   const handleSoumissionClick = (soumissionId) => {
     setSelectedSoumissionId(soumissionId);
   };
@@ -49,9 +57,15 @@ const SoumissionsEnt = () => {
       )}
       {/* Bouton Cancel */}
       {selectedSoumissionId && (
-        <button className="btn btn-danger mt-3" onClick={handleCancelClick}>
-          Cancel
-        </button>
+        <>
+          {/*<button className="btn btn-primary mt-3" onClick={handleGestionSoumissionAdd}>*/}
+          {/*  Valider*/}
+          {/*</button>*/}
+          <button className="btn btn-danger mt-3" onClick={handleCancelClick}>
+            Cancel
+          </button>
+        </>
+
       )}
     </div>
   );

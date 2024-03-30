@@ -22,7 +22,7 @@ public class EmployeController {
     @Autowired
     private IAEmployeService employeService;
 
-    @PostMapping
+    @PostMapping("/employes")
     public Employe createEmploye(@RequestBody Employe employe) {
         return employeService.createEmploye(employe);
     }
