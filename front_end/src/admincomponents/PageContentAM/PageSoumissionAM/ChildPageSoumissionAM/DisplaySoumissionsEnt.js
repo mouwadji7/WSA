@@ -68,6 +68,16 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
         tache: generateTache(tacheDetails),
       });
       console.log("Gestion soumission created:", response.data);
+
+      // Réinitialiser les détails de la tâche après la création réussie
+      setTacheDetails({
+        nom: "",
+        description: "",
+        dateDebut: "",
+        dateFin: "",
+        employesAssignes: [],
+        vehiculesAssignes: [],
+      });
     } catch (error) {
       console.error("Error creating gestion de soumission:", error);
     }
@@ -162,7 +172,7 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
                         ...prevState,
                         vehiculesAssignes: [
                           ...prevState.vehiculesAssignes.filter(
-                            (data) => data.id !== vehicule.id,
+                            (data) => data.id !== vehicule.id
                           ),
                           vehicule,
                         ],
@@ -189,7 +199,7 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
                         ...prevState,
                         employesAssignes: [
                           ...prevState.employesAssignes.filter(
-                            (emp) => emp.id !== employe.id,
+                            (emp) => emp.id !== employe.id
                           ),
                           employe,
                         ],
@@ -245,3 +255,4 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
 };
 
 export default DisplaySoumissionsEnt;
+

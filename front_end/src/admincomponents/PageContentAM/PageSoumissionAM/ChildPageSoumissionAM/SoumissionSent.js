@@ -19,15 +19,6 @@ const SoumissionsEnt = () => {
     }
   };
 
-  const handleGestionSoumissionAdd = async () => {
-    try {
-      const response = await axiosConfig.post("/gestionSoumissions/create");
-      setSoumissions(response.data);
-    } catch (error) {
-      console.error("Error fetching soumissions:", error);
-    }
-  };
-
   const handleSoumissionClick = (soumissionId) => {
     setSelectedSoumissionId(soumissionId);
   };
@@ -40,26 +31,32 @@ const SoumissionsEnt = () => {
     <div className="col-sm-6 bg-dark text-white">
       <div className="container pt-5 text-center">
         <h1>Soumissions non gérées</h1>
-        <ul>
+        <ul style={{ padding: "10px 0" }}>
           {soumissions.map((soumission) => (
-            <li
-              key={soumission.id}
-              onClick={() => handleSoumissionClick(soumission.id)}
-            >
-              {soumission.nom} {soumission.prenom} -{" "}
-              {soumission.dateDemenagement}
+            <li key={soumission.id} className="list-group-item" style={{ marginBottom: "10px" }}>
+              <div className="d-flex justify-content-between align-items-center">
+                <button
+                  onClick={() => handleSoumissionClick(soumission.id)}
+                  className="btn btn-primary mr-3"
+                  style={{ border: "2px solid #007bff" }}
+                >
+                  {soumission.nom} {soumission.prenom} - {soumission.dateDemenagement}
+                  {/* Afficher DisplaySoumissionsEnt à côté de la soumission cliquée */}
+                  {selectedSoumissionId === soumission.id && (
+                    <DisplaySoumissionsEnt soumissionId={selectedSoumissionId} />
+                  )}
+                </button>
+                
+              </div>
             </li>
           ))}
         </ul>
       </div>
-      {/* Affiche DisplaySoumissionsEnt si une soumission est sélectionnée */}
-      {selectedSoumissionId && (
-        <DisplaySoumissionsEnt soumissionId={selectedSoumissionId} />
-      )}
+      
       {/* Bouton Cancel */}
       {selectedSoumissionId && (
         <div className="container text-center mt-3">
-          <button className="btn btn-danger mr-2" onClick={handleCancelClick}>
+          <button className="btn btn-danger mr-2" onClick={handleCancelClick} style={{ border: "2px solid #007bff" }}>
             Cancel
           </button>
           {/* Bouton Valider */}
