@@ -27,6 +27,7 @@ const SoumissionsEnt = () => {
       console.error("Error fetching soumissions:", error);
     }
   };
+
   const handleSoumissionClick = (soumissionId) => {
     setSelectedSoumissionId(soumissionId);
   };
@@ -37,7 +38,7 @@ const SoumissionsEnt = () => {
 
   return (
     <div className="col-sm-6 bg-dark text-white">
-      <div className="container pt-5">
+      <div className="container pt-5 text-center">
         <h1>Soumissions non gérées</h1>
         <ul>
           {soumissions.map((soumission) => (
@@ -57,15 +58,15 @@ const SoumissionsEnt = () => {
       )}
       {/* Bouton Cancel */}
       {selectedSoumissionId && (
-        <>
-          {/*<button className="btn btn-primary mt-3" onClick={handleGestionSoumissionAdd}>*/}
-          {/*  Valider*/}
-          {/*</button>*/}
-          <button className="btn btn-danger mt-3" onClick={handleCancelClick}>
+        <div className="container text-center mt-3">
+          <button className="btn btn-danger mr-2" onClick={handleCancelClick}>
             Cancel
           </button>
-        </>
-
+          {/* Bouton Valider */}
+          {/* <button className="btn btn-primary" onClick={handleGestionSoumissionAdd}>
+            Valider
+          </button> */}
+        </div>
       )}
     </div>
   );

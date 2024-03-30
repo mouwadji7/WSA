@@ -116,6 +116,16 @@ public ResponseEntity<GestionSoumission> createGestionSoumission(@RequestBody Ma
         gestionSoumissionService.updateSoumission(id, soumission);
     }
 
+    @GetMapping("/gestionSoumissions/by-soumission/{soumissionId}")
+public ResponseEntity<GestionSoumission> getGestionSoumissionBySoumissionId(@PathVariable String soumissionId) {
+    GestionSoumission gestionSoumission = gestionSoumissionService.getGestionSoumissionBySoumissionId(soumissionId);
+    if (gestionSoumission != null) {
+        return new ResponseEntity<>(gestionSoumission, HttpStatus.OK);
+    } else {
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+}
+
     @GetMapping("/gestionSoumissions/{id}")
     public ResponseEntity<GestionSoumission> getGestionSoumissionById(@PathVariable String id) {
         GestionSoumission gestionSoumission = gestionSoumissionService.getGestionSoumissionById(id);

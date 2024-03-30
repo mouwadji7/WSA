@@ -65,8 +65,8 @@ function VehRecherche() {
   return (
     <div className="col-sm-6 bg-dark text-white">
       <div className="container pt-5">
-        <h1 className="text-white mb-4">Recherche de véhicules</h1>
-        <form onSubmit={handleSubmit}>
+        <h1 className="text-center">Recherche de véhicules</h1>
+        <form onSubmit={handleSubmit} className="text-center">
           <input
             type="text"
             value={searchTerm}
@@ -78,7 +78,7 @@ function VehRecherche() {
             Rechercher
           </button>
         </form>
-        <ul className="list-group">
+        <ul className="list-group text-center">
           {searchResults.map((vehicle) => (
             <li
               key={vehicle.id}
@@ -100,9 +100,12 @@ function VehRecherche() {
                   </button>
                 ))}
               </div>
-              <div>
+              <div className="mt-3">
                 {/* Bouton de suppression de véhicule */}
-                <button onClick={() => deleteVehicle(vehicle.id)}>
+                <button
+                  onClick={() => deleteVehicle(vehicle.id)}
+                  className="btn btn-danger me-2"
+                >
                   Supprimer Véhicule
                 </button>
                 {/* Bouton de modification de véhicule */}
@@ -112,6 +115,7 @@ function VehRecherche() {
                       /* Nouvelles données du véhicule */
                     })
                   }
+                  className="btn btn-primary"
                 >
                   Modifier Véhicule
                 </button>

@@ -35,7 +35,11 @@ public class SoumissionService implements IASoumissionService{
         return soumissionRepository.findById(id).orElse(null);
     }
 
-
+    @Override
+    public Soumission getSoumissionByReferenceNumber(String referenceNumber) {
+        return soumissionRepository.findByReferenceNumber(referenceNumber);
+    }
+    
     @Override
     public List<Soumission> getAllSoumissions() {
         return soumissionRepository.findAll();

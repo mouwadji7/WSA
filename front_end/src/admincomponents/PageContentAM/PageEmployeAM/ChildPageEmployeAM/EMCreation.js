@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axiosConfig from "../../../../axiosConfig";
+
 function EMCreation() {
   const [nom, setNom] = useState("");
   const [prenom, setPrenom] = useState("");
   const [email, setEmail] = useState("");
   const [telephone, setTelephone] = useState("");
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -35,9 +37,9 @@ function EMCreation() {
   };
 
   return (
-    <div className="col-sm-6 bg-dark text-white">
+    <div className=" bg-dark text-white">
       <div className="container pt-5">
-        <h1 className="text-white mb-4">Créer un nouvel employé</h1>
+        <h1 className="text-center text-white mb-4">Créer un nouvel employé</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="nom" className="form-label text-white">
@@ -91,9 +93,11 @@ function EMCreation() {
               required
             />
           </div>
-          <button type="submit" className="btn btn-primary">
-            Créer
-          </button>
+          <div className="d-grid gap-2">
+            <button type="submit" className="btn btn-primary pb-2">
+              Créer
+            </button>
+          </div>
         </form>
       </div>
     </div>

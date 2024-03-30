@@ -9,7 +9,7 @@ function EMDisplay() {
     const fetchEmployees = async () => {
       try {
         const response = await axiosConfig.get("/employes");
-        setEmployees(v => [...response.data]);
+        setEmployees([...response.data]);
       } catch (error) {
         console.error("Erreur lors de la récupération des employés:", error);
       }
@@ -18,18 +18,19 @@ function EMDisplay() {
     fetchEmployees();
   }, []);
 
-  console.log(employees)
-
   return (
-    <div className="col-sm-6 bg-dark text-white">
+    <div className=" bg-dark text-white ">
       <div className="container pt-5">
-        <h1 className="text-white mb-4">Liste des employés</h1>
+        <h1 className="text-center text-white mb-4">Liste des employés</h1>
         <ul className="list-group">
           {employees.map((employee) => (
             <li
               key={employee.id}
-              className="list-group-item bg-dark text-white mb-2"
+              className="list-group-item bg-dark text-white mb-2 d-flex justify-content-between align-items-center"
             >
+              <div>
+                {employee.nom} {employee.prenom}
+              </div>
               <OverlayTrigger
                 placement="right"
                 overlay={
@@ -45,9 +46,7 @@ function EMDisplay() {
                   </Tooltip>
                 }
               >
-                <div>
-                  {employee.nom} {employee.prenom}
-                </div>
+                <i className="bi bi-info-circle"></i>
               </OverlayTrigger>
             </li>
           ))}
