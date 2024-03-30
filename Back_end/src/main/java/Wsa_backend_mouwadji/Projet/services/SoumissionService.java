@@ -21,6 +21,11 @@ public class SoumissionService implements IASoumissionService{
     }
 
     @Override
+    public Soumission getSoumissionByReferenceNumber(String referenceNumber) {
+        return soumissionRepository.findByReferenceNumber(referenceNumber);
+    }
+
+    @Override
     public void deleteSoumission(String id) {
         soumissionRepository.deleteById(id);
     }

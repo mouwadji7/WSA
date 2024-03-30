@@ -30,7 +30,7 @@ function VehRecherche() {
       (vehicle) =>
         vehicle.nom.toLowerCase().includes(searchTerm.toLowerCase()) ||
         vehicle.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        vehicle.tachesAssignes.includes(searchTerm),
+        vehicle.tachesAssignes.includes(searchTerm)
     );
     // Mettre à jour les résultats de la recherche
     setSearchResults(filteredResults);
@@ -63,63 +63,65 @@ function VehRecherche() {
   };
 
   return (
-    <div className="col-sm-6 bg-dark text-white">
-      <div className="container pt-5">
-        <h1 className="text-white mb-4">Recherche de véhicules</h1>
-        <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            value={searchTerm}
-            onChange={handleChange}
-            placeholder="Rechercher par nom, ID ou tâche"
-            className="form-control mb-3"
-          />
-          <button type="submit" className="btn btn-primary mb-3">
-            Rechercher
-          </button>
-        </form>
-        <ul className="list-group">
-          {searchResults.map((vehicle) => (
-            <li
-              key={vehicle.id}
-              className="list-group-item bg-dark text-white mb-2"
-            >
-              <div>Nom: {vehicle.nom}</div>
-              <div>Type: {vehicle.type}</div>
-              <div>
-                Tâches assignées:{" "}
-                {vehicle.tachesAssignes.map((taskId) => (
-                  <button
-                    key={taskId}
-                    onClick={() =>
-                      console.log("Voir détails de la tâche", taskId)
-                    }
-                    className="btn btn-link"
-                  >
-                    {taskId}
-                  </button>
-                ))}
-              </div>
-              <div>
-                {/* Bouton de suppression de véhicule */}
-                <button onClick={() => deleteVehicle(vehicle.id)}>
-                  Supprimer Véhicule
-                </button>
-                {/* Bouton de modification de véhicule */}
+    <div className="col-sm-6 bg-dark text-white rounded p-4 text-center">
+      <h1 className="mb-4">Recherche de véhicules</h1>
+      <form onSubmit={handleSubmit} className="mb-3">
+        <input
+          type="text"
+          value={searchTerm}
+          onChange={handleChange}
+          placeholder="Rechercher par nom, ID ou tâche"
+          className="form-control mb-2"
+        />
+        <button type="submit" className="btn btn-primary mb-2">
+          Rechercher
+        </button>
+      </form>
+      <ul className="list-group">
+        {searchResults.map((vehicle) => (
+          <li
+            key={vehicle.id}
+            className="list-group-item bg-dark text-white mb-3 rounded"
+          >
+            <div>Nom: {vehicle.nom}</div>
+            <div>Type: {vehicle.type}</div>
+            <div>
+              Tâches assignées:{" "}
+              {vehicle.tachesAssignes.map((taskId) => (
                 <button
+                  key={taskId}
                   onClick={() =>
-                    updateVehicle(vehicle.id, {
-                      /* Nouvelles données du véhicule */
-                    })
+                    console.log("Voir détails de la tâche", taskId)
                   }
+                  className="btn btn-link mr-1"
                 >
-                  Modifier Véhicule
+                  {taskId}
                 </button>
-              </div>
-            </li>
-          ))}
-        </ul>
-      </div>
+              ))}
+            </div>
+            <div>
+              {/* Bouton de suppression de véhicule */}
+              <button
+                onClick={() => deleteVehicle(vehicle.id)}
+                className="btn btn-danger mr-2"
+              >
+                Supprimer Véhicule
+              </button>
+              {/* Bouton de modification de véhicule */}
+              <button
+                onClick={() =>
+                  updateVehicle(vehicle.id, {
+                    /* Nouvelles données du véhicule */
+                  })
+                }
+                className="btn btn-primary"
+              >
+                Modifier Véhicule
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

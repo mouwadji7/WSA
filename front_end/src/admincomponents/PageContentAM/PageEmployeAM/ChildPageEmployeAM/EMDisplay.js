@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axiosConfig from "../../../../axiosConfig";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 function EMDisplay() {
   const [employees, setEmployees] = useState([]);
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const tooltipRef = useRef();
 
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
         const response = await axiosConfig.get("/employes");
-        setEmployees(v => [...response.data]);
+        setEmployees([...response.data]);
       } catch (error) {
         console.error("Erreur lors de la récupération des employés:", error);
       }
@@ -18,10 +20,12 @@ function EMDisplay() {
     fetchEmployees();
   }, []);
 
-  console.log(employees)
+  const handleMouseMove = (event) => {
+    setTooltipPosition({ x: event.pageX, y: event.pageY });
+  };
 
   return (
-    <div className="col-sm-6 bg-dark text-white">
+    <div className="col-sm-6 bg-dark text-white" onMouseMove={handleMouseMove}>
       <div className="container pt-5">
         <h1 className="text-white mb-4">Liste des employés</h1>
         <ul className="list-group">
@@ -31,9 +35,17 @@ function EMDisplay() {
               className="list-group-item bg-dark text-white mb-2"
             >
               <OverlayTrigger
+                trigger="hover"
                 placement="right"
                 overlay={
-                  <Tooltip id={`tooltip-${employee.id}`}>
+                  <Tooltip
+                    id={`tooltip-${employee.id}`}
+                    style={{
+                      left: `${tooltipPosition.x}px`,
+                      top: `${tooltipPosition.y}px`,
+                    }}
+                    ref={tooltipRef}
+                  >
                     <div>ID: {employee.id}</div>
                     <div>Nom: {employee.nom}</div>
                     <div>Prénom: {employee.prenom}</div>

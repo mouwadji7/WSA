@@ -51,6 +51,17 @@ public class SoumissionController {
         return new ResponseEntity<>(soumissions, HttpStatus.OK);
     }
 
+    @GetMapping("/soumissions/by-reference/{referenceNumber}")
+    public ResponseEntity<Soumission> getSoumissionByReferenceNumber(@PathVariable String referenceNumber) {
+        Soumission soumission = soumissionService.getSoumissionByReferenceNumber(referenceNumber);
+        if (soumission != null) {
+            return new ResponseEntity<>(soumission, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
     @GetMapping("/soumissions/{id}")
     public ResponseEntity<Soumission> getSoumissionById(@PathVariable String id) {
         Soumission soumission = soumissionService.getSoumissionById(id);

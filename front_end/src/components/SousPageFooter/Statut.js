@@ -13,17 +13,13 @@ function StatusPage({ onCheckStatus }) {
     setStatus(fetchedStatus);
   };
 
-  const getStatusFromBackend = async (id) => {
+  const getStatusFromBackend = async (referenceNumber) => {
     try {
-      const response = await axiosConfig.get(
-          `/soumissions/${id}`,
-      );
-      return response.data?.gerer ? "Déja traité":"En cours de traitement";
+      const response = await axiosConfig.get(`/soumissions/by-reference/${referenceNumber}`);
+      const gerer = response.data?.gerer;
+      return gerer ? "Déjà traitée" : "En cours de traitement";
     } catch (error) {
-      console.error(
-          "Erreur lors de la récupération du statut de la soumission dans la base de données :",
-          error,
-      );
+      console.error("Erreur lors de la récupération du statut de la soumission dans la base de données :", error);
       // Gérer l'erreur
     }
   };

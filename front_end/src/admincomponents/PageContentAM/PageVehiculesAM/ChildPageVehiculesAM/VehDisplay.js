@@ -27,7 +27,7 @@ function VehDisplay() {
         console.log("Véhicule supprimé avec succès");
         // Mettre à jour la liste des véhicules après suppression
         setListeVehicules((prevList) =>
-          prevList.filter((vehicle) => vehicle.id !== id),
+          prevList.filter((vehicle) => vehicle.id !== id)
         );
       })
       .catch((error) => {
@@ -44,8 +44,8 @@ function VehDisplay() {
   return (
     <div className="col-sm-6 bg-dark text-white">
       <div className="container pt-5">
-        <h1>Liste des Véhicules</h1>
-        <ul>
+        <h1 className="text-center mb-4">Liste des Véhicules</h1>
+        <ul className="list-unstyled">
           {listeVehicules.map((vehicle, index) => (
             <OverlayTrigger
               key={index}
@@ -62,13 +62,19 @@ function VehDisplay() {
                 </Tooltip>
               }
             >
-              <li>
+              <li className="text-center mb-3">
                 {vehicle.nom} - {vehicle.type}
-                <button onClick={() => handleEdit(vehicle.id)}>
+                <button
+                  onClick={() => handleEdit(vehicle.id)}
+                  className="btn btn-primary ml-2"
+                >
                   <BsPencil />
                 </button>{" "}
                 {/* Bouton Modifier */}
-                <button onClick={() => handleDelete(vehicle.id)}>
+                <button
+                  onClick={() => handleDelete(vehicle.id)}
+                  className="btn btn-danger ml-2"
+                >
                   <BsTrash />
                 </button>{" "}
                 {/* Bouton Supprimer */}
