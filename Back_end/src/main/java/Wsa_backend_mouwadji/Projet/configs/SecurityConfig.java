@@ -2,8 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Wsa_backend_mouwadji.Projet.auth;
+package Wsa_backend_mouwadji.Projet.configs;
 
+import Wsa_backend_mouwadji.Projet.auth.JwtAuthFilter;
+import Wsa_backend_mouwadji.Projet.auth.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean; 
 import org.springframework.context.annotation.Configuration; 
@@ -22,22 +24,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain; 
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter; 
 
-/**
- *
- * @author kmaco
- */
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig { 
   
     @Autowired
-    private JwtAuthFilter authFilter; 
+    private JwtAuthFilter authFilter;
   
     // User Creation 
     @Bean
     public UserDetailsService userDetailsService() { 
-        return new UserInfoService(); 
+        return new UserInfoService();
     } 
   
     // Configuring HttpSecurity 
