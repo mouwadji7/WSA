@@ -6,7 +6,7 @@ import {CONNECTED, setLogin as setUserLogged} from "../../login";
 
 const NOT_EMPTY_ERROR_MESSAGE = "Le champs est requis"
 
-export default function ({setLogin}) {
+export default function ({setLogin, setShowLoginPage}) {
     const [message, setMessage] = useState("");
     const [credentials, setCredentials] = useState({username: "", password: ""});
     const [inputsStatus, setInputsStatus] = useState({
@@ -39,7 +39,6 @@ export default function ({setLogin}) {
         e.preventDefault();
         getToken(credentials);
     }
-
 
     const getToken = async (_credentials) => {
         try {
@@ -80,6 +79,7 @@ export default function ({setLogin}) {
                 <p>{!inputsStatus.password.valid && inputsStatus.password.errorMessage}</p>
             </div>
             <input disabled={shouldDisabled()} type={"submit"} value={"S'authentifier"} />
+            <input onClick={() => setShowLoginPage(false)} type={"button"} value={"Annuler"} />
         </form>
     </section>
 }

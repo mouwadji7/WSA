@@ -30,8 +30,6 @@ function App() {
     const [showLoginPage, setShowLoginPage] = useState(false);
     const [selectedPage, setSelectedPage] = useState("AdminHome");
 
-
-
     useEffect(() => {
         if (isLoged()) {
             setLogin({status: CONNECTED})
@@ -40,9 +38,8 @@ function App() {
         }
     }, []);
 
-
     const handleAuth = () => {
-    setShowLoginPage(true)
+        setShowLoginPage(true)
     };
     const handleDisconnection = () => {
       Logout();
@@ -54,7 +51,7 @@ function App() {
        &&
       showLoginPage
     ) {
-    return <PageLogin setLogin={setLogin} />
+    return <PageLogin setLogin={setLogin} setShowLoginPage={setShowLoginPage} />
     }
 
     if ( login.status === NOT_CONNECTED ) {
