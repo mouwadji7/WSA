@@ -3,6 +3,7 @@ package Wsa_backend_mouwadji.Projet.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,6 +12,7 @@ import Wsa_backend_mouwadji.Projet.models.Soumission;
 import Wsa_backend_mouwadji.Projet.services.IAservice.IASoumissionService;
 
 @RestController
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RequestMapping("/api")
 //@CrossOrigin( origins = "*", allowedHeaders = "*")
 public class SoumissionController {

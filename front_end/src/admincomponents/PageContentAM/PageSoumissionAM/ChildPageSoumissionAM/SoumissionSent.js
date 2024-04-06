@@ -31,7 +31,7 @@ const SoumissionsEnt = () => {
     <div className="col-sm-6 bg-dark text-white">
       <div className="container pt-5 text-center">
         <h1>Soumissions non gérées</h1>
-        <ul style={{ padding: "10px 0" }}>
+        <ul style={{ padding: "10px PageLogin.js" }}>
           {soumissions.map((soumission) => (
             <li key={soumission.id} className="list-group-item" style={{ marginBottom: "10px" }}>
               <div className="d-flex justify-content-between align-items-center">
