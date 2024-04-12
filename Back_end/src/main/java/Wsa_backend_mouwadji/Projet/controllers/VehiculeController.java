@@ -3,6 +3,7 @@ package Wsa_backend_mouwadji.Projet.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import Wsa_backend_mouwadji.Projet.models.Vehicule;
 import Wsa_backend_mouwadji.Projet.services.IAservice.IAVehiculeService;
 
 @RestController
+@PreAuthorize("hasAuthority('ROLE_ADMIN')")
 @RequestMapping("/api")
 public class VehiculeController {
     
