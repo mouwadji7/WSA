@@ -91,6 +91,21 @@ const DisplaySoumissionsEnt = ({ soumissionId }) => {
   return (
     <div className="container-fluid mt-5 pt-5">
       <h1 className="text-center mb-4">Page Gestion des soumissions</h1>
+      <div>
+              <p>Référence : {soumission.referenceNumber}</p>
+              <p>Nom : {soumission.nom}</p>
+              <p>Prénom : {soumission.prenom}</p>
+              <p>Email : {soumission.email}</p>
+              <p>Téléphone : {soumission.telephone}</p>
+              <p>Adresse de départ : {soumission.adresseDepart}</p>
+              <p>Adresse de destination : {soumission.adresseDestination}</p>
+              <p>Date de déménagement : {soumission.dateDemenagement}</p>
+              <p>Heure de déménagement : {soumission.heureDemenagement}</p>
+              <p>Type d'habitation : {soumission.typeHabitation}</p>
+              <p>Emplacement d'habitation : {soumission.emplacementHabitation}</p>
+              <p>Chambres à charger : {soumission.chambresACharger}</p>
+              <p>Gerer : {soumission.gerer ? "Oui" : "Non"}</p>
+          </div>
       <div className="row justify-content-center">
         {/* Affichage des détails de la soumission */}
         <div className="col-sm-4 bg-primary text-white">

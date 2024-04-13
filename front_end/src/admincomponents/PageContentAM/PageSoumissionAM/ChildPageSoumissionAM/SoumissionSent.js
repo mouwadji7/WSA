@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axiosConfig from "../../../../axiosConfig";
 import DisplaySoumissionsEnt from "./DisplaySoumissionsEnt";
 
@@ -7,13 +7,26 @@ const SoumissionsEnt = () => {
   const [selectedSoumissionId, setSelectedSoumissionId] = useState(null);
 
   useEffect(() => {
-    fetchSoumissionsNonGerees();
+    fetchAllSoumissions();
   }, []);
 
-  const fetchSoumissionsNonGerees = async () => {
+  const fetchAllSoumissions = async () => {
     try {
-      const response = await axiosConfig.get("/soumissions/non-geres");
-      setSoumissions(response.data);
+      // Récupérer toutes les soumissions
+      const soumissionsResponse = await axiosConfig.get("/soumissions/all");
+      const allSoumissions = soumissionsResponse.data;
+
+      // Récupérer toutes les gestion de soumissions
+      const gestionSoumissionsResponse = await axiosConfig.get("/gestionSoumissions/all");
+      const allGestionSoumissions = gestionSoumissionsResponse.data;
+
+      // Filtrer les soumissions non gérées
+      const nonGereesSoumissions = allSoumissions.filter(soumission => {
+        // Vérifier si la soumission est gérée en recherchant son ID dans les gestion de soumissions
+        return !allGestionSoumissions.some(gestionSoumission => gestionSoumission.soumissionId === soumission.id);
+      });
+
+      setSoumissions(nonGereesSoumissions);
     } catch (error) {
       console.error("Error fetching soumissions:", error);
     }
