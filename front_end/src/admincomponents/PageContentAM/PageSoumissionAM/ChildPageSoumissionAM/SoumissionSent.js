@@ -54,6 +54,11 @@ const SoumissionsEnt = () => {
                   style={{ border: "2px solid #007bff" }}
                 >
                   {soumission.nom} {soumission.prenom} - {soumission.dateDemenagement}
+
+                  <p>Référence : {soumission.referenceNumber} | Email : {soumission.email}</p>
+                  <p>Téléphone : {soumission.telephone} | Type d'habitation : {soumission.typeHabitation}</p>
+                  <p>Adresse de départ : {soumission.adresseDepart} | Adresse de destination : {soumission.adresseDestination}</p>
+                  <p>Chambres à charger : {soumission.chambresACharger} | Emplacement d'habitation : {soumission.emplacementHabitation}</p>
                   {/* Afficher DisplaySoumissionsEnt à côté de la soumission cliquée */}
                   {selectedSoumissionId === soumission.id && (
                     <DisplaySoumissionsEnt soumissionId={selectedSoumissionId} />
